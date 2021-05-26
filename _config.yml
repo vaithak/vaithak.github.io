@@ -109,15 +109,19 @@ author:
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://vaithak.github.io"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/vaithak"
-    - label: "Resume"
-      icon: "far fa-fw fa-file-pdf"
-      # url: "/assets/files/resume-renato-golia.pdf"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/vaithak"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/vaithak"
+    - label: "goodreads"
+      icon: "fab fa-fw fa-goodreads"
+      url: "https://www.goodreads.com/review/list/30560993-vaibhav-thakkar"
+    - label: "Resume"
+      icon: "far fa-fw fa-file-pdf"
+      # url: "/assets/files/resume-renato-golia.pdf"
+    
     # - label: "Instagram"
     #   icon: "fab fa-fw fa-instagram"
     #   # url: "https://instagram.com/"
@@ -125,12 +129,15 @@ author:
 # Site Footer
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/vaithak"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/vaithak"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/vaithak"
+    - label: "goodreads"
+      icon: "fab fa-fw fa-goodreads"
+      url: "https://www.goodreads.com/review/list/30560993-vaibhav-thakkar"
 
 
 # Reading Files
