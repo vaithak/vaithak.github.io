@@ -21,7 +21,11 @@ If you want to collaborate or have any questions, feel free to shoot me an email
     - **May 2019 - July 2019:** Software Engineering intern at [CodeChef](https://codechef.com).
 
 ## pet projects
-**To be added**
+- [pygpbo](https://github.com/vaithak/pygpbo): a library for doing constrained bayesian optimization, it also contains methods for high dimensional bayesian optimization using linear projections (like REMBO, Alebo) etc. It was written as a course project during my undergraduation. 
+- [Sudoku-Image-Solver](https://github.com/vaithak/Sudoku-Image-Solver): this can be considered as one of my first projects for full stack machine learning, this involved training and building the model, using it for inference at run time, adding wrappers around it to display the results, giving the user an option to correct the model output and finally deploying the application. For testing purposes, I used my own [Sudoku-Generator](https://github.com/vaithak/Sudoku-Generator).
+- [Wind-Farm layout optimization](https://github.com/vaithak/Wind_Farm_Layout_Optimization): this was done as for a hackathon organised by Shell.ai, the problem was properly arranging wind turbines in a field as to maximize energy output using computer simulations. This involed understanding about the wake effect in a wind farm; we tried to solve the optimization problem using genetic algorithms.
+- [smbt](https://github.com/vaithak/smbt): a small utility written in applescript for macos, it helps to save all the opened tabs (link and title) of the browser into a text file, which can all be opened again simultaneously.   
+- [Connect4 - AI](https://github.com/vaithak/Connect4_AI): a browser based game of Connect 4 with the features of playing against another human, observing a game, chat messages and an option to play against an AI. The frontend is a bit laggy and written in vanilla js, backend was written in python using django mainly because of it's websockets library. A heuristic and search based AI was written in C++ and then ported to python.
 
 ## miscellaneous
 - I love to play football and cricket during my free time.
