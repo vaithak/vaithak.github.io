@@ -17,8 +17,8 @@ If you want to collaborate or have any questions, feel free to shoot me an email
 - **Summer 2021, (3 months):** [Google Summer of Code (GSoC)](https://summerofcode.withgoogle.com/projects/#6649856422051840) student, working with the [GeomScale](https://github.com/GeomScale) organisation.
 - **Summer 2021, (2 months):** Research internship in the [Computer Vision & Machine Learning Group, NUS](https://sites.google.com/comp.nus.edu.sg/cvml) with [Prof. Angela Yao](https://www.comp.nus.edu.sg/cs/bio/ayao/) and under the mentorship of [Fadime Sener](https://cg.cs.uni-bonn.de/en/people/m-sc-fadime-sener/).
 - **2017 - 2021:** Bachelor of Technology at [IIT Kanpur](https://iitk.ac.in/) with a major in Electrical Engineering and three minors in Computer Science. This was an amazing experience for me, as this exposed me to various domains of computer science and engineering.
-    - **May 2020 - July 2020:** Summer Analyst at [Goldman Sachs](https://www.goldmansachs.com/worldwide/india/).
-    - **May 2019 - July 2019:** Software Engineering intern at [CodeChef](https://codechef.com).
+    - **Summer 2020, (2 months):** Summer Analyst at [Goldman Sachs](https://www.goldmansachs.com/worldwide/india/). Held remotely because of covid.
+    - **Summer 2019, (3 months):** Software Engineering intern at [CodeChef](https://codechef.com).
 
 ## pet projects
 - [pygpbo](https://github.com/vaithak/pygpbo): a library for doing constrained bayesian optimization, it also contains methods for high dimensional bayesian optimization using linear projections (like REMBO, Alebo) etc. It was written as a course project during my undergraduation. 
