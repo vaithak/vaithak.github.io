@@ -4,6 +4,7 @@ permalink: /about
 title: About me
 modified: 5-21-2021
 author_profile: true
+comments: false
 ---
 
 I am currently a senior undergraduate at [Indian Institute of Technology, Kanpur](https://iitk.ac.in/), where I am majoring in [Electrical Engineering](https://www.iitk.ac.in/ee/) and minors in three domains of [Computer Science and Engineering](https://cse.iitk.ac.in/), namely Machine Learning, Computer Systems and Theory of Computation.  

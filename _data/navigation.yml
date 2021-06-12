@@ -4,10 +4,10 @@ main:
   #   url: /about
   # - title: "News"
   #   url: /news
-  # - title: "Work experience"
-  #   url: /experience
-  - title: "Posts"
-    url: /years
+  - title: "tags"
+    url: /tags/
+  - title: "posts"
+    url: /year-archive/
   # - title: "Sample Collections"
   #   url: /collection-archive/
   # - title: ""
