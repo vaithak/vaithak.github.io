@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2021-06-13T22:00:04+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">Vaibhav’s blog</title><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">GSoC: About the project</title><link href="https://vaithak.github.io/gsoc-about-project/" rel="alternate" type="text/html" title="GSoC: About the project" /><published>2021-06-13T00:00:00+05:30</published><updated>2021-06-13T00:00:00+05:30</updated><id>https://vaithak.github.io/gsoc-about-project</id><content type="html" xml:base="https://vaithak.github.io/gsoc-about-project/">&lt;p&gt;I have been selected as a student developer in &lt;a href=&quot;https://summerofcode.withgoogle.com/&quot;&gt;Google Summer of Code&lt;/a&gt; under the &lt;a href=&quot;https://geomscale.github.io/&quot;&gt;GeomScale organization&lt;/a&gt; &amp;amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.&lt;/p&gt;
+
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/gsoc.png&quot; width=&quot;40%&quot; height=&quot;200&quot; /&gt; + &lt;img src=&quot;/assets/images/geomscale.png&quot; width=&quot;40%&quot; height=&quot;200&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;a href=&quot;https://summerofcode.withgoogle.com/projects/#6649856422051840&quot;&gt;Project link&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;about-the-organization&quot;&gt;About the Organization&lt;/h2&gt;
+&lt;p&gt;From the webpage of the organization:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;“GeomScale is a research and development project that delivers open source code for state-of-the-art algorithms at the intersection of data science, optimization, geometric, and statistical computing”.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I have always been interested in the field of applied maths and this project immediately caught my attention.&lt;br /&gt;
+Currently, the organization works on mainly two open-source libraries, one of which is &lt;a href=&quot;https://github.com/GeomScale/volume_approximation&quot;&gt;volesti&lt;/a&gt;, which is a C++ library with R and python interfaces, this library contains several algorithms for high-dimensional sampling and volume approximation. The other one is the recently introduced &lt;a href=&quot;https://github.com/GeomScale/dingo&quot;&gt;dingo&lt;/a&gt;, which is a python package for analyzing metabolic networks.&lt;/p&gt;
+
+&lt;h2 id=&quot;introduction-to-my-project&quot;&gt;Introduction to my project&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;It is possible that you may not be familiar with many terms in this section, don't worry, I will try to explain them in detail in the upcoming section.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In brief, my project is to extend the functionality of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;volesti&lt;/code&gt; library, specifically implementing the functionality of “Counting Linear Extensions of a poset (partially ordered set)”.&lt;br /&gt;
+This problem can be converted to computing volume of a convex polytope, for which &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;volesti&lt;/code&gt; contains state-of-the-art algorithms.&lt;/p&gt;
+
+&lt;p&gt;Exact problem description is as following:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;The problem of counting the linear extensions of a given partial order consists of finding (counting) all the possible ways that we can extend the partial order to a total order that preserves the original partial order.&lt;br /&gt;
+It is an important problem with various applications in Artificial Intelligence and Machine Learning, for example in partial-order plans and in learning graphical models. It is a well known #P-complete problem; the fastest known algorithms are based on dynamic programming and require exponential time and space.&lt;br /&gt;
+Nevertheless, if we only need an approximate counting attained with a probability of success, then the problem admits a polynomial-time solution for all posets using Markov chain Monte Carlo (MCMC) methods. &lt;br /&gt;
+This project aims to implement new randomized methods to approximate the number of linear extensions based on volume approximation.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;mathematical-details-of-the-project&quot;&gt;Mathematical details of the project&lt;/h2&gt;
+&lt;p&gt;First, I will start by introducing the terms used in the above section, because one all the terms are clear, the aim of the project will become crystal clear (hopefully).&lt;/p&gt;
+
+&lt;h3 id=&quot;poset&quot;&gt;Poset&lt;/h3&gt;
+&lt;p&gt;The term “poset” is short for “partially ordered set”, that is, a set whose elements are ordered but not all pairs of elements are required to be comparable in the order.&lt;/p&gt;
+
+&lt;p&gt;I will try to explain with an example:&lt;br /&gt;
+Let’s say you have marks of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n=5&lt;/code&gt; students in two exams, the marks of a student (out of 10) 
+is given as a pair, let the marks of the students be as follows:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;student-id&lt;/th&gt;
+      &lt;th&gt;marks&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$S_1$&lt;/td&gt;
+      &lt;td&gt;(5, 8)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$S_2$&lt;/td&gt;
+      &lt;td&gt;(7, 4)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$S_3$&lt;/td&gt;
+      &lt;td&gt;(8, 3)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$S_4$&lt;/td&gt;
+      &lt;td&gt;(9, 4)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$S_5$&lt;/td&gt;
+      &lt;td&gt;(4, 2)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Now, let’s say your task is to find the topper of the class (yup, as always, creating an unnecessary competition in a learning environment). Now, there may exist many personal opinions on how to rank them, like take the sum (or mean) of two score, take the minimum of two scores etc. But, all these are subjective and can not be generalized to any pair of exams. 
+The main point is that there exist a pair of students, which cannot be compared.&lt;br /&gt;
+for ex. $S_1$ and $S_3$ cannot be compared, similarly $S_1$ and $S_2$ cannot be compared, but there are some pairs which can be compared, like $S_1$ and $S_5$, as $S_1$ scored higher marks in both the subjects.&lt;/p&gt;
+
+&lt;p&gt;There exists many such examples, for ex. when you are deciding which laptop to buy, you may consider several features for comparing them, like: price, RAM size, screen size, processor, company etc.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For representing the order between elements, we use the $\leq$ symbol (seems intuitive), 
+so we can say that $S_5 \leq S_1$, $S_3 \leq S_4$ and so on.&lt;/li&gt;
+  &lt;li&gt;We say that elements $a, b$ of a poset are comparable, if either $a \leq b$ or $b \leq a$.&lt;/li&gt;
+  &lt;li&gt;Although the symbol is of $\leq$, but the binary relation can be of any sort,&lt;br /&gt;
+formally, a partial order is any binary relation that is reflexive (each element is comparable to itself), antisymmetric (no two different elements precede each other), and transitive.&lt;br /&gt;
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Partially_ordered_set&quot;&gt;Complete definition can be obtained here&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;representing-poset-as-a-directed-acyclic-graph-dag&quot;&gt;Representing poset as a Directed Acyclic Graph (DAG)&lt;/h3&gt;
+
+&lt;h3 id=&quot;linear-extensions-of-a-poset&quot;&gt;Linear extensions of a poset&lt;/h3&gt;
+
+&lt;h3 id=&quot;naive-recursive-algorithm-for-counting-linear-extensions&quot;&gt;Naive recursive algorithm for Counting Linear Extensions&lt;/h3&gt;
+
+&lt;h2 id=&quot;relation-to-volume-computation&quot;&gt;Relation to volume computation&lt;/h2&gt;</content><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><category term="gsoc" /><summary type="html">I have been selected as a student developer in Google Summer of Code under the GeomScale organization &amp;amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.</summary></entry><entry><title type="html">First post</title><link href="https://vaithak.github.io/first-post/" rel="alternate" type="text/html" title="First post" /><published>2021-06-11T00:00:00+05:30</published><updated>2021-06-11T00:00:00+05:30</updated><id>https://vaithak.github.io/first-post</id><content type="html" xml:base="https://vaithak.github.io/first-post/">&lt;p&gt;Hello World :wave:
+This is my first post on this blog and I really hope that it won’t be the last :sweat_smile:.&lt;/p&gt;
+
+&lt;p&gt;Till now, I haven’t been very fond of writing big articles or essays, reasons of which are as follows:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;I am too lazy to write. As we know that our thoughts are significantly faster than our writing or typing speed, so I used to think that by writing down stuff, the thought process will slow down and it won’t benefit me in any way&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;What changed ?&lt;/strong&gt;: My philosophy of why writing can be beneficial is that when we have ideas in our mind only, then we can only do a spatially-local traversal between them, i.e if we consider the ideas and thoughts as a large connected web, if we are currently thinking of an idea, then in our mind we can only visualize only a subset of it’s 1-hop or at max 2-hop neighbors, and the traverse the web in this way. But when we have written down our thoughts, we gain an extra ability to see our thoughts, this can help us in recognizing some features which many not be present in our thoughts. This can result in visualizing a very large neighborhood and even entire paths of ideas.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;I thought that I have nothing to share, why will anyone be interested in reading my posts?&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;What changed ?&lt;/strong&gt;: I realized that there is always something to share, even if the same material exists somewhere else, but still, a new perspective can always make a difference (hopefully a positive one).&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;I have (very) bad writing skills (is this a reason or a consequence :thinking:)&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;What changed ?&lt;/strong&gt;: Absolutely nothing.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;why-now&quot;&gt;Why now?&lt;/h3&gt;
+&lt;p&gt;It isn’t that I realized all the above reasons now, I have known them for a good amount of time, but in the wise words of Joker “All it takes is a little push”.&lt;br /&gt;
+It came after my selection in &lt;a href=&quot;https://summerofcode.withgoogle.com/projects/#6649856422051840&quot;&gt;Google Summer of Code&lt;/a&gt;, the mentors in the GeomScale organization encouraged all of the selected students to write a blog explaining the work progress. So, here I am trying to write one.&lt;/p&gt;
+
+&lt;p&gt;Also, my aim of writing this post is so that I can revisit it after 1-2 years when I would have written a good number of posts. and see what has changed since then.&lt;/p&gt;</content><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><category term="first-post" /><summary type="html">Hello World :wave: This is my first post on this blog and I really hope that it won’t be the last :sweat_smile:.</summary></entry></feed>
