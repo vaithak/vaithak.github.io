@@ -89,11 +89,15 @@ This results in the following graph:
 Now, although the above graph is already a DAG, but if you observe carefully, it can be made even more compact. \\
 This can be done by utilizing the transitive property of the partial order relations, i.e  
 
+<center>
+<span style="font-size: 0.8em">
 $$
 \begin{align*}
   a \leq b, b \leq c \Rightarrow a \leq c
 \end{align*}
 $$
+</span>
+</center>
 
 This means that in the above graph, when there is already an edge from $S_5 \rightarrow S_3$ and then $S_3 \rightarrow S_4$, then the edge $S_5 \rightarrow S_4$ 
 is not giving us any extra information, this means it is implicit and can be removed.  \\
@@ -114,6 +118,8 @@ i.e $a \leq b$ in the poset of the students, then definitely $b$ will get a bett
 
 The following are 2 example rankings that you can assign to the students (the right one being rank 1 and left one being rank 5):
 
+<center>
+<span style="font-size: 0.8em">
 $$
 \begin{equation}
   \begin{split}
@@ -122,6 +128,8 @@ $$
   \end{split}
 \end{equation}
 $$
+</span>
+</center>
 
 The above example rankings are examples of a [total order](https://en.wikipedia.org/wiki/Total_order), the only additional property of a *"total order or a linear order"* 
 compared to a *"partial order"* is that any two elements are comparable.    
@@ -140,11 +148,30 @@ Now that we know what a linear extension is, let's devise a basic algorithm for 
 - Even before thinking about an algorithm, let's think about the scale of this number? For this, let's take the worst case example, i.e a set of $n$ elements
 with no order between any pair of elements, it is easy to see that there are $n!$ number of linear extensions for this set. Thus, we see that the count of 
 linear extensions can be very high ($n! \propto \sqrt{n} \left(\frac{n}{e}\right)^n$).
-- Now, 
+
+One way can be to enumerate all possible linear extensions, we gain insights from the above example of ranking the students, the high level view of the 
+algorithm can be described as follows:  
+
+***High level algorithm:***  
+Enumerate over all elements which can be ranked at the last of the $n$ elements, these are called [minimal elements](https://en.wikipedia.org/wiki/Maximal_and_minimal_elements) of the poset, nodes that are not greater than any other element of the poset, i.e a node $s$ is a minimal element if $\nexists$ any element $m$ s.t $m \leq s$.  
+For each minimal element, place it at the end and then recurse for the remaining $n-1$ elements.  
+
+<center>
+<span style="font-size: 0.6em">
+$$
+\begin{equation}
+  \begin{split}
+    \text{COUNT_LIN_EXT}(P) &= \sum_{x \in min(P)} \text{COUNT_LIN_EXT}(P \setminus x),  \\
+    \text{where } min(P) & \text{ is the set of minimal elements of the poset P} \\
+  \end{split}
+\end{equation}
+$$
+</span>
+</center>
 
 
 ## Relation to volume computation
-I hope you enjoyed the post so far, but as you know the library `volesti` is used for volume computations of convex bodies and the problem 
-seems to lie in the **combinatorial domain**, what does it have to do with the volume computations ? :thinking:   
+I hope you enjoyed the post so far, but one may wonder that the library `volesti` is used for volume computations of convex bodies,
+and the problem we are tackling seems to lie in the "combinatorial domain", what does it have to do with the volume computations ? :thinking:   
 
-Keep thinking, this question will be discussed in the next post :wink:
+Keep thinking, this question will be discussed in the next post :wink:, as it has some prerequisites which will also be covered in the next post.
