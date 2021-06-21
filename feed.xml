@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2021-06-21T02:36:00+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">Vaibhav’s blog</title><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">GSoC: About the project</title><link href="https://vaithak.github.io/gsoc-about-project/" rel="alternate" type="text/html" title="GSoC: About the project" /><published>2021-06-21T00:00:00+05:30</published><updated>2021-06-21T00:00:00+05:30</updated><id>https://vaithak.github.io/gsoc-about-project</id><content type="html" xml:base="https://vaithak.github.io/gsoc-about-project/">&lt;p&gt;I have been selected as a student developer in &lt;a href=&quot;https://summerofcode.withgoogle.com/&quot;&gt;Google Summer of Code&lt;/a&gt; under the &lt;a href=&quot;https://geomscale.github.io/&quot;&gt;GeomScale organization&lt;/a&gt; &amp;amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2021-06-21T22:15:58+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">Vaibhav’s blog</title><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">GSoC: About the project (Part 1)</title><link href="https://vaithak.github.io/gsoc-about-project/" rel="alternate" type="text/html" title="GSoC: About the project (Part 1)" /><published>2021-06-21T00:00:00+05:30</published><updated>2021-06-21T00:00:00+05:30</updated><id>https://vaithak.github.io/gsoc-about-project</id><content type="html" xml:base="https://vaithak.github.io/gsoc-about-project/">&lt;p&gt;I have been selected as a student developer in &lt;a href=&quot;https://summerofcode.withgoogle.com/&quot;&gt;Google Summer of Code&lt;/a&gt; under the &lt;a href=&quot;https://geomscale.github.io/&quot;&gt;GeomScale organization&lt;/a&gt; &amp;amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.&lt;/p&gt;
 
 &lt;center&gt;
     &lt;img src=&quot;/assets/images/gsoc.png&quot; width=&quot;40%&quot; height=&quot;200&quot; /&gt; + &lt;img src=&quot;/assets/images/geomscale.png&quot; width=&quot;40%&quot; height=&quot;200&quot; /&gt;
@@ -17,7 +17,8 @@ Currently, the organization works on mainly two open-source libraries, one of wh
 &lt;h2 id=&quot;introduction-to-my-project&quot;&gt;Introduction to my project&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;It is possible that you may not be familiar with many terms in this section, don&apos;t worry, I will try to explain them in detail in the upcoming section.&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;In brief, my project is to extend the functionality of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;volesti&lt;/code&gt; library, specifically implementing the functionality of “Counting Linear Extensions of a poset (partially ordered set)”.&lt;br /&gt;
+&lt;p&gt;In brief, my project is to extend the functionality of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;volesti&lt;/code&gt; library, in particular, 
+implementing the functionality of “Counting Linear Extensions of a poset (partially ordered set)”.&lt;br /&gt;
 This problem can be converted to computing volume of a convex polytope, for which &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;volesti&lt;/code&gt; contains state-of-the-art algorithms.&lt;/p&gt;
 
 &lt;p&gt;Exact problem description is as following:&lt;/p&gt;
@@ -29,7 +30,7 @@ This project aims to implement new randomized methods to approximate the number 
 &lt;/blockquote&gt;
 
 &lt;h2 id=&quot;mathematical-details-of-the-project&quot;&gt;Mathematical details of the project&lt;/h2&gt;
-&lt;p&gt;First, I will start by introducing the terms used in the above section, because one all the terms are clear, the aim of the project will become crystal clear (hopefully).&lt;/p&gt;
+&lt;p&gt;First, I will start by introducing the terms used in the above section, because once all the terms are clear, the aim of the project will become crystal clear (hopefully).&lt;/p&gt;
 
 &lt;h3 id=&quot;poset&quot;&gt;Poset&lt;/h3&gt;
 &lt;p&gt;The term “poset” is short for “partially ordered set”, that is, a set whose elements are ordered but not all pairs of elements are required to be comparable in the order.&lt;/p&gt;
@@ -133,7 +134,7 @@ This is known as finding the transitive reduction of a DAG, you can read more ab
 teacher with good ethics decides to assign ranks with a condition, if a student $b$ has better marks than student $a$ in both exams, 
 i.e $a \leq b$ in the poset of the students, then definitely $b$ will get a better rank than $a$.&lt;/p&gt;
 
-&lt;p&gt;The following are 2 example rankings that you can assign to the students (the right one being rank 1 and left one being rank 5):&lt;/p&gt;
+&lt;p&gt;The following are 2 example rankings that you can assign to the students (the rightmost being rank 1 and leftmost being rank 5):&lt;/p&gt;
 
 &lt;center&gt;
 &lt;span style=&quot;font-size: 0.8em&quot;&gt;
@@ -178,6 +179,14 @@ algorithm can be described as follows:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;High level algorithm:&lt;/em&gt;&lt;/strong&gt;&lt;br /&gt;
 Enumerate over all elements which can be ranked at the last of the $n$ elements, these are called &lt;a href=&quot;https://en.wikipedia.org/wiki/Maximal_and_minimal_elements&quot;&gt;minimal elements&lt;/a&gt; of the poset, nodes that are not greater than any other element of the poset, i.e a node $s$ is a minimal element if $\nexists$ any element $m$ s.t $m \leq s$.&lt;br /&gt;
 For each minimal element, place it at the end and then recurse for the remaining $n-1$ elements.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The above algorithm is essentially enumerating over all possible linear extensions, so it’s time complexity will be $O(n!)$. Although, we can use 
+memoization to recompute things (or use dynamic programming for bottom up approach), still the number of subproblems will be exponential in the worst case
+$\Big[ {n\choose 1} + {n\choose 2} + \dots =  O(2^n) \Big]$.&lt;/li&gt;
+  &lt;li&gt;Although, the above algorithm is exponential, but the problem of &lt;a href=&quot;https://dl.acm.org/doi/10.1145/103418.103441&quot;&gt;Counting Linear Extensions is in fact P-complete&lt;/a&gt;, 
+i.e it is in &lt;a href=&quot;https://en.wikipedia.org/wiki/P_(complexity)&quot;&gt;P&lt;/a&gt; and atleast as hard as all other problems in the time complexity class P.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;center&gt;
 &lt;span style=&quot;font-size: 0.6em&quot;&gt;

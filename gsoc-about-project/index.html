@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>GSoC: About the project - Vaibhav’s blog</title>
+<!-- begin _includes/seo.html --><title>GSoC: About the project (Part 1) - Vaibhav’s blog</title>
 <meta name="description" content="I have been selected as a student developer in Google Summer of Code under the GeomScale organization &amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.">
 
 
@@ -22,7 +22,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Vaibhav's blog">
-<meta property="og:title" content="GSoC: About the project">
+<meta property="og:title" content="GSoC: About the project (Part 1)">
 <meta property="og:url" content="https://vaithak.github.io/gsoc-about-project/">
 
 
@@ -35,7 +35,7 @@
 
 
   <meta name="twitter:site" content="@vaithak">
-  <meta name="twitter:title" content="GSoC: About the project">
+  <meta name="twitter:title" content="GSoC: About the project (Part 1)">
   <meta name="twitter:description" content="I have been selected as a student developer in Google Summer of Code under the GeomScale organization &amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.">
   <meta name="twitter:url" content="https://vaithak.github.io/gsoc-about-project/">
 
@@ -314,7 +314,7 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="GSoC: About the project">
+    <meta itemprop="headline" content="GSoC: About the project (Part 1)">
     <meta itemprop="description" content="I have been selected as a student developer in Google Summer of Code under the GeomScale organization &amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.">
     <meta itemprop="datePublished" content="2021-06-21T00:00:00+05:30">
     
@@ -322,7 +322,7 @@
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">GSoC: About the project
+          <h1 id="page-title" class="page__title" itemprop="headline">GSoC: About the project (Part 1)
 </h1>
           
 
@@ -390,7 +390,8 @@ Currently, the organization works on mainly two open-source libraries, one of wh
 <h2 id="introduction-to-my-project">Introduction to my project</h2>
 <p><code class="language-plaintext highlighter-rouge">It is possible that you may not be familiar with many terms in this section, don't worry, I will try to explain them in detail in the upcoming section.</code></p>
 
-<p>In brief, my project is to extend the functionality of the <code class="language-plaintext highlighter-rouge">volesti</code> library, specifically implementing the functionality of “Counting Linear Extensions of a poset (partially ordered set)”.<br>
+<p>In brief, my project is to extend the functionality of the <code class="language-plaintext highlighter-rouge">volesti</code> library, in particular, 
+implementing the functionality of “Counting Linear Extensions of a poset (partially ordered set)”.<br>
 This problem can be converted to computing volume of a convex polytope, for which <code class="language-plaintext highlighter-rouge">volesti</code> contains state-of-the-art algorithms.</p>
 
 <p>Exact problem description is as following:</p>
@@ -402,7 +403,7 @@ This project aims to implement new randomized methods to approximate the number 
 </blockquote>
 
 <h2 id="mathematical-details-of-the-project">Mathematical details of the project</h2>
-<p>First, I will start by introducing the terms used in the above section, because one all the terms are clear, the aim of the project will become crystal clear (hopefully).</p>
+<p>First, I will start by introducing the terms used in the above section, because once all the terms are clear, the aim of the project will become crystal clear (hopefully).</p>
 
 <h3 id="poset">Poset</h3>
 <p>The term “poset” is short for “partially ordered set”, that is, a set whose elements are ordered but not all pairs of elements are required to be comparable in the order.</p>
@@ -507,7 +508,7 @@ This is known as finding the transitive reduction of a DAG, you can read more ab
 teacher with good ethics decides to assign ranks with a condition, if a student $b$ has better marks than student $a$ in both exams, 
 i.e $a \leq b$ in the poset of the students, then definitely $b$ will get a better rank than $a$.</p>
 
-<p>The following are 2 example rankings that you can assign to the students (the right one being rank 1 and left one being rank 5):</p>
+<p>The following are 2 example rankings that you can assign to the students (the rightmost being rank 1 and leftmost being rank 5):</p>
 
 <center>
 <span style="font-size: 0.8em">
@@ -552,6 +553,14 @@ algorithm can be described as follows:</p>
 <p><strong><em>High level algorithm:</em></strong><br>
 Enumerate over all elements which can be ranked at the last of the $n$ elements, these are called <a href="https://en.wikipedia.org/wiki/Maximal_and_minimal_elements">minimal elements</a> of the poset, nodes that are not greater than any other element of the poset, i.e a node $s$ is a minimal element if $\nexists$ any element $m$ s.t $m \leq s$.<br>
 For each minimal element, place it at the end and then recurse for the remaining $n-1$ elements.</p>
+
+<ul>
+  <li>The above algorithm is essentially enumerating over all possible linear extensions, so it’s time complexity will be $O(n!)$. Although, we can use 
+memoization to recompute things (or use dynamic programming for bottom up approach), still the number of subproblems will be exponential in the worst case
+$\Big[ {n\choose 1} + {n\choose 2} + \dots =  O(2^n) \Big]$.</li>
+  <li>Although, the above algorithm is exponential, but the problem of <a href="https://dl.acm.org/doi/10.1145/103418.103441">Counting Linear Extensions is in fact P-complete</a>, 
+i.e it is in <a href="https://en.wikipedia.org/wiki/P_(complexity)">P</a> and atleast as hard as all other problems in the time complexity class P.</li>
+</ul>
 
 <center>
 <span style="font-size: 0.6em">
@@ -607,7 +616,7 @@ and the problem we are tackling seems to lie in the “combinatorial domain”, 
     <h4 class="page__share-title">Share on</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?via=vaithak&text=GSoC%3A+About+the+project%20https%3A%2F%2Fvaithak.github.io%2Fgsoc-about-project%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?via=vaithak&text=GSoC%3A+About+the+project+%28Part+1%29%20https%3A%2F%2Fvaithak.github.io%2Fgsoc-about-project%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fvaithak.github.io%2Fgsoc-about-project%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
