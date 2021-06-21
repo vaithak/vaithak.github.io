@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "GSoC: About the project (Part 1)"
+title:  "GSoC: Project Overview (Part 1)"
 date:   2021-06-21
 tag: gsoc
 toc: true
