@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://vaithak.github.io/pages/vaithak/first-post/</loc>
+<loc>https://vaithak.github.io/first-post/</loc>
 <lastmod>2021-06-11T00:00:00+05:30</lastmod>
 </url>
 <url>
-<loc>https://vaithak.github.io/pages/vaithak/gsoc-about-project/</loc>
+<loc>https://vaithak.github.io/gsoc-about-project/</loc>
 <lastmod>2021-06-21T00:00:00+05:30</lastmod>
 </url>
 <url>
-<loc>https://vaithak.github.io/pages/vaithak/about</loc>
+<loc>https://vaithak.github.io/about</loc>
 </url>
 <url>
-<loc>https://vaithak.github.io/pages/vaithak/</loc>
+<loc>https://vaithak.github.io/</loc>
 </url>
 <url>
-<loc>https://vaithak.github.io/pages/vaithak/tags/</loc>
+<loc>https://vaithak.github.io/tags/</loc>
 </url>
 <url>
-<loc>https://vaithak.github.io/pages/vaithak/year-archive/</loc>
+<loc>https://vaithak.github.io/year-archive/</loc>
 </url>
 </urlset>
