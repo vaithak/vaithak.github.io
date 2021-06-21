@@ -556,7 +556,7 @@ For each minimal element, place it at the end and then recurse for the remaining
 
 <ul>
   <li>The above algorithm is essentially enumerating over all possible linear extensions, so it’s time complexity will be $O(n!)$. Although, we can use 
-memoization to recompute things (or use dynamic programming for bottom up approach), still the number of subproblems will be exponential in the worst case
+memoization to avoid recomputing the subproblems (or use dynamic programming for bottom up approach), still the number of subproblems will be exponential in the worst case
 $\Big[ {n\choose 1} + {n\choose 2} + \dots =  O(2^n) \Big]$.</li>
   <li>Although, the above algorithm is exponential, but the problem of <a href="https://dl.acm.org/doi/10.1145/103418.103441">Counting Linear Extensions is in fact P-complete</a>, 
 i.e it is in <a href="https://en.wikipedia.org/wiki/P_(complexity)">P</a> and atleast as hard as all other problems in the time complexity class P.</li>
