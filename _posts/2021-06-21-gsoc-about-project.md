@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "GSoC: About the project"
+title:  "GSoC: About the project (Part 1)"
 date:   2021-06-21
 tag: gsoc
 toc: true
@@ -27,7 +27,8 @@ Currently, the organization works on mainly two open-source libraries, one of wh
 ## Introduction to my project
 `It is possible that you may not be familiar with many terms in this section, don't worry, I will try to explain them in detail in the upcoming section.`
 
-In brief, my project is to extend the functionality of the `volesti` library, specifically implementing the functionality of "Counting Linear Extensions of a poset (partially ordered set)".  
+In brief, my project is to extend the functionality of the `volesti` library, in particular, 
+implementing the functionality of "Counting Linear Extensions of a poset (partially ordered set)".  
 This problem can be converted to computing volume of a convex polytope, for which `volesti` contains state-of-the-art algorithms.  
 
 Exact problem description is as following:  
@@ -37,7 +38,7 @@ Nevertheless, if we only need an approximate counting attained with a probabilit
 This project aims to implement new randomized methods to approximate the number of linear extensions based on volume approximation.
 
 ## Mathematical details of the project
-First, I will start by introducing the terms used in the above section, because one all the terms are clear, the aim of the project will become crystal clear (hopefully).
+First, I will start by introducing the terms used in the above section, because once all the terms are clear, the aim of the project will become crystal clear (hopefully).
 
 ### Poset
 The term “poset” is short for “partially ordered set”, that is, a set whose elements are ordered but not all pairs of elements are required to be comparable in the order.   
@@ -116,7 +117,7 @@ Still, let's say we have received a strict order from the principal of this scho
 teacher with good ethics decides to assign ranks with a condition, if a student $b$ has better marks than student $a$ in both exams, 
 i.e $a \leq b$ in the poset of the students, then definitely $b$ will get a better rank than $a$.  
 
-The following are 2 example rankings that you can assign to the students (the right one being rank 1 and left one being rank 5):
+The following are 2 example rankings that you can assign to the students (the rightmost being rank 1 and leftmost being rank 5):
 
 <center>
 <span style="font-size: 0.8em">
@@ -154,7 +155,13 @@ algorithm can be described as follows:
 
 ***High level algorithm:***  
 Enumerate over all elements which can be ranked at the last of the $n$ elements, these are called [minimal elements](https://en.wikipedia.org/wiki/Maximal_and_minimal_elements) of the poset, nodes that are not greater than any other element of the poset, i.e a node $s$ is a minimal element if $\nexists$ any element $m$ s.t $m \leq s$.  
-For each minimal element, place it at the end and then recurse for the remaining $n-1$ elements.  
+For each minimal element, place it at the end and then recurse for the remaining $n-1$ elements.   
+
+- The above algorithm is essentially enumerating over all possible linear extensions, so it's time complexity will be $O(n!)$. Although, we can use 
+memoization to recompute things (or use dynamic programming for bottom up approach), still the number of subproblems will be exponential in the worst case
+$\Big[ {n\choose 1} + {n\choose 2} + \dots =  O(2^n) \Big]$.
+- Although, the above algorithm is exponential, but the problem of [Counting Linear Extensions is in fact P-complete](https://dl.acm.org/doi/10.1145/103418.103441), 
+i.e it is in [P](https://en.wikipedia.org/wiki/P_(complexity)) and atleast as hard as all other problems in the time complexity class P.
 
 <center>
 <span style="font-size: 0.6em">
