@@ -1,1 +1,1 @@
-Sitemap: https://vaithak.github.io/sitemap.xml
+Sitemap: https://vaithak.github.io/pages/vaithak/sitemap.xml
