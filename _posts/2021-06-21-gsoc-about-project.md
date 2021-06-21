@@ -158,7 +158,7 @@ Enumerate over all elements which can be ranked at the last of the $n$ elements,
 For each minimal element, place it at the end and then recurse for the remaining $n-1$ elements.   
 
 - The above algorithm is essentially enumerating over all possible linear extensions, so it's time complexity will be $O(n!)$. Although, we can use 
-memoization to recompute things (or use dynamic programming for bottom up approach), still the number of subproblems will be exponential in the worst case
+memoization to avoid recomputing the subproblems (or use dynamic programming for bottom up approach), still the number of subproblems will be exponential in the worst case
 $\Big[ {n\choose 1} + {n\choose 2} + \dots =  O(2^n) \Big]$.
 - Although, the above algorithm is exponential, but the problem of [Counting Linear Extensions is in fact P-complete](https://dl.acm.org/doi/10.1145/103418.103441), 
 i.e it is in [P](https://en.wikipedia.org/wiki/P_(complexity)) and atleast as hard as all other problems in the time complexity class P.
