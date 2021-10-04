@@ -20,7 +20,7 @@ title                    : "Vaibhav's blog"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Vaibhav Thakkar"
-description              : 
+description              :
 url                      : https://vaithak.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : vaithak/vaithak.github.io # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -97,8 +97,8 @@ author:
   name             : "Vaibhav Thakkar"
   avatar           : "/assets/images/bio-photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : >
-    Senior undergrad at IIT Kanpur. 
-    Currently interested and working in the areas of Applied Maths, 
+    Building (0 --> 1) @ [DevRev](https://devrev.ai/).
+    Currently interested and working in the areas of Applied Maths,
     Distributed Systems and Machine Learning.
   location         : "India"
   email            : "vaibhav.thakkar.22.12.99@gmail.com"
@@ -121,7 +121,7 @@ author:
     - label: "Resume"
       icon: "far fa-fw fa-file-pdf"
       # url: "/assets/files/resume-renato-golia.pdf"
-    
+
     # - label: "Instagram"
     #   icon: "fab fa-fw fa-instagram"
     #   # url: "https://instagram.com/"
