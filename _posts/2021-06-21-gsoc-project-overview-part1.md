@@ -200,5 +200,23 @@ The following results will make a beautiful connection between counting linear e
 We have converted our problem of counting linear extensions into the problem of computing volume of polytopes in high dimensions. \\
 As already stated, the problem of counting linear extensions is provably hard, and the above problem reduction takes polynomial time, this means that the problem of computing volume of polytopes in high dimensions is also provably hard.
 
+## (approximate) Volume computation in high dimensions
+This is where [GeomScale's volesti](https://github.com/GeomScale/volesti) library comes in - it contains implementations for efficiently approximating volumes of high dimensional convex objects, it does so by utilizing Multiphase Markov Chain Monte Carlo (MCMC) methods. You can read more about it from the documentations and paper mentioned in their README.
 
-We will explore possible ways of computing volumes in a separate post. :)
+The images below provides a high level overview of these techniques:
+<center>
+    <img src="/assets/images/monte-carlo.png" width="95%" /><br>
+    <em style="font-size: 0.7em"> Monte Carlo method.</em>
+</center>
+<br>  
+
+<center>
+    <img src="/assets/images/multiphase-monte-carlo.png" width="95%" /><br>
+    <em style="font-size: 0.7em"> Multiphase Monte Carlo.</em>
+</center>
+<br>  
+
+<center>
+    <img src="/assets/images/multiphase-mcmc.png" width="95%" /><br>
+    <em style="font-size: 0.7em"> Markov Chain Monte Carlo.</em>
+</center>

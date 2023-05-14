@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "n
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Vaibhav's blog"
+title                    : "VT space"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Vaibhav Thakkar"
@@ -95,17 +95,15 @@ analytics:
 # Site Author
 author:
   name             : "Vaibhav Thakkar"
-  avatar           : "/assets/images/bio-photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/profile.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : >
-    Building (0 --> 1) @ [DevRev](https://devrev.ai/).
-    Currently interested and working in the areas of Applied Maths,
-    Distributed Systems and Machine Learning.
+    Interested in working on Open source scientific softwares, AI and/or Robotics.
   location         : "India"
   email            : "vaibhav.thakkar.22.12.99@gmail.com"
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:vaibhav.thakkar.22.12.99@gmail.com"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/vaithak/"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://vaithak.github.io"
@@ -118,13 +116,7 @@ author:
     - label: "goodreads"
       icon: "fab fa-fw fa-goodreads"
       url: "https://www.goodreads.com/review/list/30560993-vaibhav-thakkar"
-    - label: "Resume"
-      icon: "far fa-fw fa-file-pdf"
       # url: "/assets/files/resume-renato-golia.pdf"
-
-    # - label: "Instagram"
-    #   icon: "fab fa-fw fa-instagram"
-    #   # url: "https://instagram.com/"
 
 # Site Footer
 footer:
