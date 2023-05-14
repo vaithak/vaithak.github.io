@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Counting Linear Extensions: GSoC Project Overview - Vaibhav’s blog</title>
+<!-- begin _includes/seo.html --><title>Counting Linear Extensions: GSoC Project Overview - VT space</title>
 <meta name="description" content="I have been selected as a student developer in Google Summer of Code under the GeomScale organization &amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.">
 
 
@@ -21,7 +21,7 @@
 
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="Vaibhav's blog">
+<meta property="og:site_name" content="VT space">
 <meta property="og:title" content="Counting Linear Extensions: GSoC Project Overview">
 <meta property="og:url" content="https://vaithak.github.io/gsoc-project-overview-part1/">
 
@@ -87,7 +87,7 @@
 
 
 
-  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Vaibhav's blog Feed">
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VT space Feed">
 
 
 <!-- https://t.co/dKP3o1e -->
@@ -151,7 +151,7 @@
       <nav id="site-nav" class="greedy-nav">
         
         <a class="site-title" href="/">
-          Vaibhav's blog
+          VT space
           
         </a>
         <ul class="visible-links">
@@ -190,7 +190,7 @@
   
     <div class="author__avatar">
       
-        <img src="/assets/images/bio-photo.jpg" alt="Vaibhav Thakkar" itemprop="image">
+        <img src="/assets/images/profile.jpg" alt="Vaibhav Thakkar" itemprop="image">
       
     </div>
   
@@ -201,7 +201,7 @@
     
     
       <div class="author__bio" itemprop="description">
-        <p>Building (0 –&gt; 1) @ <a href="https://devrev.ai/">DevRev</a>. Currently interested and working in the areas of Applied Maths, Distributed Systems and Machine Learning.</p>
+        <p>Interested in working on Open source scientific softwares, AI and/or Robotics.</p>
 
       </div>
     
@@ -219,7 +219,7 @@
       
         
           
-            <li><a href="mailto:vaibhav.thakkar.22.12.99@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+            <li><a href="https://www.linkedin.com/in/vaithak/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
           
         
           
@@ -236,8 +236,6 @@
         
           
             <li><a href="https://www.goodreads.com/review/list/30560993-vaibhav-thakkar" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">goodreads</span></a></li>
-          
-        
           
         
       
@@ -367,6 +365,7 @@
 </li>
 <li><a href="#geometric-interpretation">Geometric Interpretation</a></li>
 <li><a href="#relation-to-volume-computation">Relation to volume computation</a></li>
+<li><a href="#approximate-volume-computation-in-high-dimensions">(approximate) Volume computation in high dimensions</a></li>
 </ul>
 
             </nav>
@@ -482,11 +481,11 @@ This can be done by utilizing the transitive property of the partial order relat
 
 <center>
 <span style="font-size: 0.8em">
-$$
+\$\$
 \begin{align*}
   a \leq b, b \leq c \Rightarrow a \leq c
 \end{align*}
-$$
+\$\$
 </span>
 </center>
 
@@ -511,14 +510,14 @@ i.e $a \leq b$ in the poset of the students, then definitely $b$ will get a bett
 
 <center>
 <span style="font-size: 0.8em">
-$$
+\$\$
 \begin{equation}
   \begin{split}
     &amp; S_5 \leq S_2 \leq S_3 \leq S_4 \leq S_1  \\
     &amp; S_5 \leq S_1 \leq S_3 \leq S_2 \leq S_4  \\
   \end{split}
 \end{equation}
-$$
+\$\$
 </span>
 </center>
 
@@ -564,14 +563,14 @@ i.e it is in <a href="https://en.wikipedia.org/wiki/%E2%99%AFP">#P</a> and atlea
 
 <center>
 <span style="font-size: 0.6em">
-$$
+\$\$
 \begin{equation}
   \begin{split}
     \text{COUNT_LIN_EXT}(P) &amp;= \sum_{x \in min(P)} \text{COUNT_LIN_EXT}(P \setminus x),  \\
     \text{where } min(P) &amp; \text{ is the set of minimal elements of the poset P} \\
   \end{split}
 \end{equation}
-$$
+\$\$
 </span>
 </center>
 
@@ -613,7 +612,26 @@ This special type of polytope formed for representing a poset is called an <a hr
 <p>We have converted our problem of counting linear extensions into the problem of computing volume of polytopes in high dimensions. <br>
 As already stated, the problem of counting linear extensions is provably hard, and the above problem reduction takes polynomial time, this means that the problem of computing volume of polytopes in high dimensions is also provably hard.</p>
 
-<p>We will explore possible ways of computing volumes in a separate post. :)</p>
+<h2 id="approximate-volume-computation-in-high-dimensions">(approximate) Volume computation in high dimensions</h2>
+<p>This is where <a href="https://github.com/GeomScale/volesti">GeomScale’s volesti</a> library comes in - it contains implementations for efficiently approximating volumes of high dimensional convex objects, it does so by utilizing Multiphase Markov Chain Monte Carlo (MCMC) methods. You can read more about it from the documentations and paper mentioned in their README.</p>
+
+<p>The images below provides a high level overview of these techniques:</p>
+<center>
+    <img src="/assets/images/monte-carlo.png" width="95%"><br>
+    <em style="font-size: 0.7em"> Monte Carlo method.</em>
+</center>
+<p><br></p>
+
+<center>
+    <img src="/assets/images/multiphase-monte-carlo.png" width="95%"><br>
+    <em style="font-size: 0.7em"> Multiphase Monte Carlo.</em>
+</center>
+<p><br></p>
+
+<center>
+    <img src="/assets/images/multiphase-mcmc.png" width="95%"><br>
+    <em style="font-size: 0.7em"> Markov Chain Monte Carlo.</em>
+</center>
 
         
       </section>
@@ -714,7 +732,7 @@ As already stated, the problem of counting linear extensions is provably hard, a
   </ul>
 </div>
 
-<div class="page__footer-copyright">© 2021 Vaibhav Thakkar. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">© 2023 Vaibhav Thakkar. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

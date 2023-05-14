@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2021-10-04T19:05:41+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">Vaibhav’s blog</title><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">Counting Linear Extensions: GSoC Project Overview</title><link href="https://vaithak.github.io/gsoc-project-overview-part1/" rel="alternate" type="text/html" title="Counting Linear Extensions: GSoC Project Overview" /><published>2021-10-04T00:00:00+05:30</published><updated>2021-10-04T00:00:00+05:30</updated><id>https://vaithak.github.io/gsoc-project-overview-part1</id><content type="html" xml:base="https://vaithak.github.io/gsoc-project-overview-part1/">&lt;p&gt;I have been selected as a student developer in &lt;a href=&quot;https://summerofcode.withgoogle.com/&quot;&gt;Google Summer of Code&lt;/a&gt; under the &lt;a href=&quot;https://geomscale.github.io/&quot;&gt;GeomScale organization&lt;/a&gt; &amp;amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2023-05-14T12:03:54+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">VT space</title><subtitle>My personal website.</subtitle><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">Counting Linear Extensions: GSoC Project Overview</title><link href="https://vaithak.github.io/gsoc-project-overview-part1/" rel="alternate" type="text/html" title="Counting Linear Extensions: GSoC Project Overview" /><published>2021-10-04T00:00:00+05:30</published><updated>2021-10-04T00:00:00+05:30</updated><id>https://vaithak.github.io/gsoc-project-overview-part1</id><content type="html" xml:base="https://vaithak.github.io/gsoc-project-overview-part1/">&lt;p&gt;I have been selected as a student developer in &lt;a href=&quot;https://summerofcode.withgoogle.com/&quot;&gt;Google Summer of Code&lt;/a&gt; under the &lt;a href=&quot;https://geomscale.github.io/&quot;&gt;GeomScale organization&lt;/a&gt; &amp;amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.&lt;/p&gt;
 
 &lt;center&gt;
     &lt;img src=&quot;/assets/images/gsoc.png&quot; width=&quot;40%&quot; height=&quot;200&quot; /&gt; + &lt;img src=&quot;/assets/images/geomscale.png&quot; width=&quot;40%&quot; height=&quot;200&quot; /&gt;
@@ -107,11 +107,11 @@ This can be done by utilizing the transitive property of the partial order relat
 
 &lt;center&gt;
 &lt;span style=&quot;font-size: 0.8em&quot;&gt;
-$$
+\$\$
 \begin{align*}
   a \leq b, b \leq c \Rightarrow a \leq c
 \end{align*}
-$$
+\$\$
 &lt;/span&gt;
 &lt;/center&gt;
 
@@ -136,14 +136,14 @@ i.e $a \leq b$ in the poset of the students, then definitely $b$ will get a bett
 
 &lt;center&gt;
 &lt;span style=&quot;font-size: 0.8em&quot;&gt;
-$$
+\$\$
 \begin{equation}
   \begin{split}
     &amp;amp; S_5 \leq S_2 \leq S_3 \leq S_4 \leq S_1  \\
     &amp;amp; S_5 \leq S_1 \leq S_3 \leq S_2 \leq S_4  \\
   \end{split}
 \end{equation}
-$$
+\$\$
 &lt;/span&gt;
 &lt;/center&gt;
 
@@ -189,14 +189,14 @@ i.e it is in &lt;a href=&quot;https://en.wikipedia.org/wiki/♯P&quot;&gt;#P&lt;
 
 &lt;center&gt;
 &lt;span style=&quot;font-size: 0.6em&quot;&gt;
-$$
+\$\$
 \begin{equation}
   \begin{split}
     \text{COUNT_LIN_EXT}(P) &amp;amp;= \sum_{x \in min(P)} \text{COUNT_LIN_EXT}(P \setminus x),  \\
     \text{where } min(P) &amp;amp; \text{ is the set of minimal elements of the poset P} \\
   \end{split}
 \end{equation}
-$$
+\$\$
 &lt;/span&gt;
 &lt;/center&gt;
 
@@ -238,4 +238,23 @@ This special type of polytope formed for representing a poset is called an &lt;a
 &lt;p&gt;We have converted our problem of counting linear extensions into the problem of computing volume of polytopes in high dimensions. &lt;br /&gt;
 As already stated, the problem of counting linear extensions is provably hard, and the above problem reduction takes polynomial time, this means that the problem of computing volume of polytopes in high dimensions is also provably hard.&lt;/p&gt;
 
-&lt;p&gt;We will explore possible ways of computing volumes in a separate post. :)&lt;/p&gt;</content><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><category term="gsoc" /><summary type="html">I have been selected as a student developer in Google Summer of Code under the GeomScale organization &amp;amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.</summary></entry></feed>
+&lt;h2 id=&quot;approximate-volume-computation-in-high-dimensions&quot;&gt;(approximate) Volume computation in high dimensions&lt;/h2&gt;
+&lt;p&gt;This is where &lt;a href=&quot;https://github.com/GeomScale/volesti&quot;&gt;GeomScale’s volesti&lt;/a&gt; library comes in - it contains implementations for efficiently approximating volumes of high dimensional convex objects, it does so by utilizing Multiphase Markov Chain Monte Carlo (MCMC) methods. You can read more about it from the documentations and paper mentioned in their README.&lt;/p&gt;
+
+&lt;p&gt;The images below provides a high level overview of these techniques:&lt;/p&gt;
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/monte-carlo.png&quot; width=&quot;95%&quot; /&gt;&lt;br /&gt;
+    &lt;em style=&quot;font-size: 0.7em&quot;&gt; Monte Carlo method.&lt;/em&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/multiphase-monte-carlo.png&quot; width=&quot;95%&quot; /&gt;&lt;br /&gt;
+    &lt;em style=&quot;font-size: 0.7em&quot;&gt; Multiphase Monte Carlo.&lt;/em&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/multiphase-mcmc.png&quot; width=&quot;95%&quot; /&gt;&lt;br /&gt;
+    &lt;em style=&quot;font-size: 0.7em&quot;&gt; Markov Chain Monte Carlo.&lt;/em&gt;
+&lt;/center&gt;</content><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><category term="gsoc" /><summary type="html">I have been selected as a student developer in Google Summer of Code under the GeomScale organization &amp;amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.</summary></entry></feed>
