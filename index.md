@@ -8,15 +8,12 @@ author_profile: true
 Currently working as a software engineer at [DevRev.ai](https://devrev.ai)
 
 ## areas of interest
-- Artifical Intelligence
-  - Meta Learning, Multi Task and Lifelong learning.
-  - Reinforcement Learning
-  - Graph Neural Networks
+- Reinforcement Learning for Artifical Intelligence - exploring
 - Open source scientific softwares
   - Contributed to [geomscale](https://github.com/GeomScale/volesti) - c++ library for volume approximation of convex bodies in high dimensions.
   - Contributed to [clad](https://github.com/vgvassilev/clad) - a clang plugin for source transformation based automatic differentiation.
   - Contributed to [ivy](https://github.com/unifyai/ivy) - a ML transpiler and a framework for unifying python based machine learning libraries.
-- Robotics - still exploring
+- Robotics - exploring
 
 ## miscellaneous
 - Always up for any physical activity - football (messi fan), trekking ...

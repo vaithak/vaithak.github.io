@@ -88,15 +88,9 @@ This results in the following graph:
 Now, although the above graph is already a DAG, but if you observe carefully, it can be made even more compact. \\
 This can be done by utilizing the transitive property of the partial order relations, i.e
 
-<center>
-<span style="font-size: 0.8em">
 $$
-\begin{align*}
   a \leq b, b \leq c \Rightarrow a \leq c
-\end{align*}
 $$
-</span>
-</center>
 
 This means that in the above graph, when there is already an edge from $S_5 \rightarrow S_3$ and then $S_3 \rightarrow S_4$, then the edge $S_5 \rightarrow S_4$
 is not giving us any extra information, this means it is implicit and can be removed.  \\
@@ -117,18 +111,12 @@ i.e $a \leq b$ in the poset of the students, then definitely $b$ will get a bett
 
 The following are 2 example rankings that you can assign to the students (the rightmost being rank 1 and leftmost being rank 5):
 
-<center>
-<span style="font-size: 0.8em">
 $$
-\begin{equation}
-  \begin{split}
-    & S_5 \leq S_2 \leq S_3 \leq S_4 \leq S_1  \\
-    & S_5 \leq S_1 \leq S_3 \leq S_2 \leq S_4  \\
-  \end{split}
-\end{equation}
+\begin{align}
+    & S_5 \leq S_2 \leq S_3 \leq S_4 \leq S_1  \newline
+    & S_5 \leq S_1 \leq S_3 \leq S_2 \leq S_4
+\end{align}
 $$
-</span>
-</center>
 
 The above example rankings are examples of a [total order](https://en.wikipedia.org/wiki/Total_order), the only additional property of a *"total order or a linear order"*
 compared to a *"partial order"* is that any two elements are comparable.
@@ -162,18 +150,14 @@ $\Big[ {n\choose 1} + {n\choose 2} + \dots =  O(2^n) \Big]$.
 i.e it is in [#P](https://en.wikipedia.org/wiki/♯P) and atleast as hard as all other problems in the time complexity class #P.
 (#P complexity class contains the counting versions of all the decision problems in the NP complexity class)
 
-<center>
 <span style="font-size: 0.6em">
 $$
-\begin{equation}
-  \begin{split}
-    \text{COUNT_LIN_EXT}(P) &= \sum_{x \in min(P)} \text{COUNT_LIN_EXT}(P \setminus x),  \\
-    \text{where } min(P) & \text{ is the set of minimal elements of the poset P} \\
-  \end{split}
-\end{equation}
+\begin{align}
+  \text{COUNT-LIN-EXT}(P) &= \sum_{x \in min(P)} \text{COUNT-LIN-EXT}(P \setminus x), \newline
+  \text{where } min(P) & \text{ is the set of minimal elements of the poset P} \newline
+\end{align} 
 $$
 </span>
-</center>
 
 ## Geometric Interpretation
 For a geometrical representation of our problem, we will consider an n-element poset in n-dimensional space. Also, to make the representation bounded, we will restrict the space inside the unit cube ([0,1]<sup>n</sup>). \\
