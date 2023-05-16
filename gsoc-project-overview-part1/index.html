@@ -336,7 +336,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          9 minute read
+          14 minute read
         
       </span>
     
@@ -479,15 +479,9 @@ This results in the following graph:</p>
 <p>Now, although the above graph is already a DAG, but if you observe carefully, it can be made even more compact. <br>
 This can be done by utilizing the transitive property of the partial order relations, i.e</p>
 
-<center>
-<span style="font-size: 0.8em">
-\$\$
-\begin{align*}
+<p>$$
   a \leq b, b \leq c \Rightarrow a \leq c
-\end{align*}
-\$\$
-</span>
-</center>
+$$</p>
 
 <p>This means that in the above graph, when there is already an edge from $S_5 \rightarrow S_3$ and then $S_3 \rightarrow S_4$, then the edge $S_5 \rightarrow S_4$
 is not giving us any extra information, this means it is implicit and can be removed.  <br>
@@ -508,18 +502,12 @@ i.e $a \leq b$ in the poset of the students, then definitely $b$ will get a bett
 
 <p>The following are 2 example rankings that you can assign to the students (the rightmost being rank 1 and leftmost being rank 5):</p>
 
-<center>
-<span style="font-size: 0.8em">
-\$\$
-\begin{equation}
-  \begin{split}
-    &amp; S_5 \leq S_2 \leq S_3 \leq S_4 \leq S_1  \\
-    &amp; S_5 \leq S_1 \leq S_3 \leq S_2 \leq S_4  \\
-  \end{split}
-\end{equation}
-\$\$
-</span>
-</center>
+<p>$$
+\begin{align}
+    &amp; S_5 \leq S_2 \leq S_3 \leq S_4 \leq S_1  \newline
+    &amp; S_5 \leq S_1 \leq S_3 \leq S_2 \leq S_4
+\end{align}
+$$</p>
 
 <p>The above example rankings are examples of a <a href="https://en.wikipedia.org/wiki/Total_order">total order</a>, the only additional property of a <em>“total order or a linear order”</em>
 compared to a <em>“partial order”</em> is that any two elements are comparable.</p>
@@ -561,18 +549,14 @@ i.e it is in <a href="https://en.wikipedia.org/wiki/%E2%99%AFP">#P</a> and atlea
 (#P complexity class contains the counting versions of all the decision problems in the NP complexity class)</li>
 </ul>
 
-<center>
-<span style="font-size: 0.6em">
-\$\$
-\begin{equation}
-  \begin{split}
-    \text{COUNT_LIN_EXT}(P) &amp;= \sum_{x \in min(P)} \text{COUNT_LIN_EXT}(P \setminus x),  \\
-    \text{where } min(P) &amp; \text{ is the set of minimal elements of the poset P} \\
-  \end{split}
-\end{equation}
-\$\$
-</span>
-</center>
+<p><span style="font-size: 0.6em">
+$$
+\begin{align}
+  \text{COUNT-LIN-EXT}(P) &amp;= \sum_{x \in min(P)} \text{COUNT-LIN-EXT}(P \setminus x), \newline
+  \text{where } min(P) &amp; \text{ is the set of minimal elements of the poset P} \newline
+\end{align} 
+$$
+</span></p>
 
 <h2 id="geometric-interpretation">Geometric Interpretation</h2>
 <p>For a geometrical representation of our problem, we will consider an n-element poset in n-dimensional space. Also, to make the representation bounded, we will restrict the space inside the unit cube ([0,1]<sup>n</sup>). <br>
@@ -677,6 +661,16 @@ As already stated, the problem of counting linear extensions is provably hard, a
 
 
       
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/autodiff-clad/" class="pagination--pager" title="Automatic Differentiation
+">Next</a>
+    
+  </nav>
+
     </div>
 
     
@@ -689,9 +683,52 @@ As already stated, the problem of counting linear extensions is provably hard, a
       <div class="grid__wrapper">
         
           
-            
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/llvm.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/autodiff-clad/" rel="permalink">Automatic Differentiation
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Given a continuos function $f(x)$, how do you compute it’s derivative $f’(x_0)$  for a particular input $x_0$ computationally?
+Similarly, for a vector valued...</p>
+  </article>
+</div>
+
+        
       </div>
     </div>
+  
   
 </div>
 

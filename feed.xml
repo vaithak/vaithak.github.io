@@ -1,4 +1,164 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2023-05-14T12:03:54+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">VT space</title><subtitle>My personal website.</subtitle><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">Counting Linear Extensions: GSoC Project Overview</title><link href="https://vaithak.github.io/gsoc-project-overview-part1/" rel="alternate" type="text/html" title="Counting Linear Extensions: GSoC Project Overview" /><published>2021-10-04T00:00:00+05:30</published><updated>2021-10-04T00:00:00+05:30</updated><id>https://vaithak.github.io/gsoc-project-overview-part1</id><content type="html" xml:base="https://vaithak.github.io/gsoc-project-overview-part1/">&lt;p&gt;I have been selected as a student developer in &lt;a href=&quot;https://summerofcode.withgoogle.com/&quot;&gt;Google Summer of Code&lt;/a&gt; under the &lt;a href=&quot;https://geomscale.github.io/&quot;&gt;GeomScale organization&lt;/a&gt; &amp;amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2023-05-16T13:18:51+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">VT space</title><subtitle>My personal website.</subtitle><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">Automatic Differentiation</title><link href="https://vaithak.github.io/autodiff-clad/" rel="alternate" type="text/html" title="Automatic Differentiation" /><published>2023-05-14T00:00:00+05:30</published><updated>2023-05-14T00:00:00+05:30</updated><id>https://vaithak.github.io/autodiff-clad</id><content type="html" xml:base="https://vaithak.github.io/autodiff-clad/">&lt;p&gt;Given a continuos function $f(x)$, how do you compute it’s derivative $f’(x_0)$  for a particular input $x_0$ computationally?&lt;br /&gt;
+Similarly, for a vector valued function $f(\vec{\boldsymbol{x}})$, how do we compute its gradient $\nabla_{\vec{\boldsymbol{x_0}}} f(\vec{\boldsymbol{x}})$?
+Where $\vec{\boldsymbol{x}}$ is an $n$ dimensional vector and&lt;/p&gt;
+
+&lt;p&gt;$$
+  \nabla f(\vec{\boldsymbol{x}}) = [ \frac{\partial f}{\partial x_0},  \frac{\partial f}{\partial x_1}, \dots \frac{\partial f}{\partial x_n}]^T
+$$&lt;/p&gt;
+
+&lt;p&gt;Computing these is beneficial in many applications - for example:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Training of parameterized ML models (including Deep Neural Networks): this involves finding the optimal set of value of parameters $\boldsymbol{\hat{\theta}}$ which minimizes a particular loss function function $\mathcal{L}$ given a particular set of training examples $\boldsymbol{X}$ and corresponding labels $\boldsymbol{y}$, i.e:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;$$
+\begin{equation}
+  \boldsymbol{\hat{\theta}} = \arg_{\theta} \min \mathcal{L} (\boldsymbol{X}, \boldsymbol{y}, \boldsymbol{\theta})
+\end{equation}
+$$&lt;/p&gt;
+
+&lt;p&gt;To solve the above optimization problem, we use some variant of gradient descent which exploits the  property of gradient that it always points in the direction of maximum increase.&lt;br /&gt;
+The optimization algorithm has the following iterative form:&lt;/p&gt;
+
+&lt;p&gt;$$
+\begin{equation}
+  \boldsymbol{\hat{\theta}}_{t+1} = \boldsymbol{\hat{\theta}}_{t} - \eta \nabla_{\hat{\theta}_t}\mathcal{L} (\boldsymbol{X}, \boldsymbol{y},  \theta)
+\end{equation}
+$$&lt;/p&gt;
+
+&lt;p&gt;The above equation essentially states that at each time step we move a little bit in the negative direction of the loss function’s gradient at the current estimate.&lt;/p&gt;
+
+&lt;h2 id=&quot;numerical-differentiation&quot;&gt;Numerical Differentiation&lt;/h2&gt;
+&lt;p&gt;Well, we can start by the definition of the derivative:&lt;/p&gt;
+
+&lt;p&gt;$$
+f’(x_0) = \lim_{h \rightarrow 0} \frac{f(x_0+h) - f(x_0)}{(x_0+h) - x} = \lim_{h \rightarrow 0} \frac{f(x_0+h) - f(x_0)}{h}
+$$&lt;/p&gt;
+
+&lt;p&gt;Now, using the above formulation we can compute the function $f$ at very small values of $h$, for example: $10^{-5}$.&lt;/p&gt;
+
+&lt;p&gt;This seems to be a good solution for cases where $f$ is sort of a black box function and we don’t have access to its inner details/compositions. But it has a major flaw:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;for computing gradient of a $n$ dimensional vector valued function, it requires $2n$ computations of function $f$.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This can be particularly expensive for cases where $n$ is large, which is definitely the case for Deep Neural Networks based models.&lt;/p&gt;
+
+&lt;h2 id=&quot;symbolic-differentiation&quot;&gt;Symbolic Differentiation&lt;/h2&gt;
+&lt;p&gt;Treating $f$ as a black-box didn’t work out, this means we need to exploit how the function works internally - what are it’s individual smaller subfunctions for which $f$ is the composition.&lt;/p&gt;
+
+&lt;p&gt;For example: 
+$$
+\begin{align}
+\text{if } f(x) &amp;amp;= \log(x)\sin^2(x), \newline 
+\Rightarrow f(x)  &amp;amp;= f_1(x) \times f_2(f_3(x)) \newline
+\text{where } f_1(x) &amp;amp;= \log(x), f_2(x) = x^2, f_3(x) = \sin(x)
+\end{align}
+$$&lt;/p&gt;
+
+&lt;p&gt;Using the above structure, we can use the properties of derivatives like product rule and chain rule to compute the derivative of the complete function $f$ using the derivatives of $f_1, f_2, f_3$.
+This way we can get an exact expression of the derivative function $f’(x)$ using a rule based engine as follows:&lt;/p&gt;
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/sym-diff.png&quot; width=&quot;85%&quot; /&gt;&lt;br /&gt;
+    &lt;em style=&quot;font-size: 0.7em&quot;&gt; Rules for symbolic differentiation&lt;/em&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;
+This is what is used by tools like Wolfram Alpha.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This seems like a perfect solution but the question is: do we want the complete expression of the derivative? For example: if $f$ is a product of $n$ such functions, then the derivative expression will contain $\approx 2^n$ terms, some of which may be redundant computations.
+One faces a similar problem when differentiating deep neural networks, which consists of composing many layers on top of each other.&lt;/li&gt;
+  &lt;li&gt;Although this method works for purely mathematical functions, but what about handling control flow? i.e how do we handle &lt;em&gt;if&lt;/em&gt; conditions and &lt;em&gt;for&lt;/em&gt; loops.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;automatic-differentiation&quot;&gt;Automatic Differentiation&lt;/h2&gt;
+&lt;p&gt;The aim is to get a procedure for computing the derivative of any general program. Hence, we come to Automatic Differentiation.&lt;/p&gt;
+&lt;h3 id=&quot;high-level-idea&quot;&gt;High level Idea&lt;/h3&gt;
+&lt;p&gt;Automatic Differentiation (or AD or autodiff) breaks down the computation into a computation graph of primitive operations (like $+, -, \times, \div$) and some primitive functions (like $\sin, \cos, \exp$) and uses chain rule and other basic rules of differentation to compute the derivatives in a procedural manner.&lt;/p&gt;
+
+&lt;h3 id=&quot;example-computation-graph&quot;&gt;Example Computation Graph&lt;/h3&gt;
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/comp-graph.png&quot; width=&quot;85%&quot; /&gt;&lt;br /&gt;
+    &lt;em style=&quot;font-size: 0.7em&quot;&gt; An example computation graph taken from Pytorch&apos;s blog &lt;/em&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;forward-mode-ad&quot;&gt;Forward Mode AD&lt;/h3&gt;
+&lt;p&gt;In forward mode AD, the aim is to calculate the derivative of the ouput(s) with respect to any one input variable. This is done by calculating the derivative w.r.t that input at each node, starting from the input nodes and traversing in the toplogical order all the way upto all output nodes.&lt;/p&gt;
+
+&lt;p&gt;This way we are essentially computing $\frac{\partial n}{\partial x_i}$ for every node $n$, where $x_i$ is the input node related to which we want the derivative results.&lt;/p&gt;
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/fwd-mode-autodiff.png&quot; width=&quot;85%&quot; /&gt;&lt;br /&gt;
+    &lt;em style=&quot;font-size: 0.7em&quot;&gt; Forward mode AD example &lt;/em&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Using forward mode AD for computing gradient of a function $f: \mathbb{R}^n \rightarrow \mathbb{R}^m$ will require $n$ traversals of the computation graph, i.e once for each input variable (although, we can vectorize this whole method which will be discussed in a future post).&lt;/p&gt;
+
+&lt;h3 id=&quot;reverse-mode-ad&quot;&gt;Reverse Mode AD&lt;/h3&gt;
+&lt;p&gt;As the name suggests, this method is completely opposite of the fwd mode, the aim is to calculate the derivative of one ouput value with respect to all input variables. This is done by accumulating all the derivatives while going in reverse - from output nodes to input nodes.&lt;/p&gt;
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/rev-acc-autodiff.png&quot; width=&quot;65%&quot; /&gt;&lt;br /&gt;
+    &lt;em style=&quot;font-size: 0.7em&quot;&gt; Reverse accumulation of derivatives &lt;/em&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this method, we are essentially computing $\frac{\partial out_i}{\partial n}$ for every node $n$, where $output_i$ is the output node related to which we want the derivative results. This is done starting from the putput nodes and traversing in the reverse toplogical order all the way upto input nodes.&lt;/p&gt;
+
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/rev-mode-autodiff.png&quot; width=&quot;85%&quot; /&gt;&lt;br /&gt;
+    &lt;em style=&quot;font-size: 0.7em&quot;&gt; Reverse mode AD example &lt;/em&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Using reverse mode AD for computing gradient of a function $f: \mathbb{R}^n \rightarrow \mathbb{R}^m$ will require $ms$ reverse traversals of the computation graph, i.e once for each output variable.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Reverse mode AD is particular helpful in cases where $m$ is very less, for example in deep neural networks the final ouput is a single scalar value of the loss function (hence $m$ = 1), that’s why deep learning libraries mainly use this mode for computing gradients w.r.t to all the parameters of the model.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;implementation-strategies&quot;&gt;Implementation strategies&lt;/h3&gt;
+&lt;p&gt;There are mainly two ways of implementing AD, one works at runtime by overloading the operators used in the source function, this is the implementation approach used inside python libraries like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autograd&lt;/code&gt; and deep learning frameworks like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pytorch&lt;/code&gt;.&lt;br /&gt;
+The other strategy is to use the AST of the source program for understanding the corresponding computational graph and build the AST for the derivative function, which is passed to the further stages of compilation to generate the code for the newly constructed AST.&lt;/p&gt;
+&lt;h4 id=&quot;overloaded-operators&quot;&gt;Overloaded Operators&lt;/h4&gt;
+&lt;p&gt;In this approach, all operations are performed on a custom defined class. This class makes sure to overload all the commonly used operators and functions for two main reasons:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;When computing the expressions, it makes sure to create a new object for every results which also keeps track of the inputs and operation used to produce this node. Hence, maintaining the computational graph. This looks very similar to the basic python snippet below:
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parents&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_op&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# internal variables used for graph construction
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_prev&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_op&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# the operation that produced this node
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__add__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;add&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;Using this, when adding two &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Value&lt;/code&gt; objects, a new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Value&lt;/code&gt; object is created which also keeps track of it’s input nodes.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;This also allows defining how gradients should be propagated for each particular operation/function (for both forward or reverse mode AD).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/autograd-comp-graph.png&quot; width=&quot;85%&quot; /&gt;&lt;br /&gt;
+    &lt;em style=&quot;font-size: 0.7em&quot;&gt; An example of how this might look like by overloading numpy operations (as done by autograd library).&lt;/em&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Because the computation graph is formed dynamically at runtime, there is no need for the implementation to understand the control flow of the source program.&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id=&quot;source-code-transformation&quot;&gt;Source Code Transformation&lt;/h4&gt;
+&lt;p&gt;In this approach, the source code of the program to be differentiated is traversed at compile time and a new function is automatically generated for the corresponding derivative code.
+Benefit of having this approach is that the generated code can take benfit of compiler based optimizations.&lt;/p&gt;
+
+&lt;p&gt;One example project for this on which I am contributing is &lt;a href=&quot;https://compiler-research.org/clad/&quot;&gt;clad&lt;/a&gt;.
+It is a clang plugin which constructs the computational graph by analysing the AST of the program and allows doing both forward or reverse mode AD for computing quantities like gradient and jacobian.
+For complete details on its working, you can refer to the documentation on the &lt;a href=&quot;https://compiler-research.org/clad/&quot;&gt;project page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;center&gt;
+    &lt;img src=&quot;/assets/images/clad.png&quot; width=&quot;100%&quot; /&gt;&lt;br /&gt;
+    &lt;em style=&quot;font-size: 0.7em&quot;&gt; Overview of clad &lt;/em&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;</content><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><category term="autodiff" /><summary type="html">Given a continuos function $f(x)$, how do you compute it’s derivative $f’(x_0)$ for a particular input $x_0$ computationally? Similarly, for a vector valued function $f(\vec{\boldsymbol{x}})$, how do we compute its gradient $\nabla_{\vec{\boldsymbol{x_0}}} f(\vec{\boldsymbol{x}})$? Where $\vec{\boldsymbol{x}}$ is an $n$ dimensional vector and</summary></entry><entry><title type="html">Counting Linear Extensions: GSoC Project Overview</title><link href="https://vaithak.github.io/gsoc-project-overview-part1/" rel="alternate" type="text/html" title="Counting Linear Extensions: GSoC Project Overview" /><published>2021-10-04T00:00:00+05:30</published><updated>2021-10-04T00:00:00+05:30</updated><id>https://vaithak.github.io/gsoc-project-overview-part1</id><content type="html" xml:base="https://vaithak.github.io/gsoc-project-overview-part1/">&lt;p&gt;I have been selected as a student developer in &lt;a href=&quot;https://summerofcode.withgoogle.com/&quot;&gt;Google Summer of Code&lt;/a&gt; under the &lt;a href=&quot;https://geomscale.github.io/&quot;&gt;GeomScale organization&lt;/a&gt; &amp;amp; will be spending the upcoming 10 Weeks working on the project of “Counting Linear Extensions”. This post will be for providing details regarding my project, mainly problem formulation and proposed solution.&lt;/p&gt;
 
 &lt;center&gt;
     &lt;img src=&quot;/assets/images/gsoc.png&quot; width=&quot;40%&quot; height=&quot;200&quot; /&gt; + &lt;img src=&quot;/assets/images/geomscale.png&quot; width=&quot;40%&quot; height=&quot;200&quot; /&gt;
@@ -105,15 +265,9 @@ This results in the following graph:&lt;/p&gt;
 &lt;p&gt;Now, although the above graph is already a DAG, but if you observe carefully, it can be made even more compact. &lt;br /&gt;
 This can be done by utilizing the transitive property of the partial order relations, i.e&lt;/p&gt;
 
-&lt;center&gt;
-&lt;span style=&quot;font-size: 0.8em&quot;&gt;
-\$\$
-\begin{align*}
+&lt;p&gt;$$
   a \leq b, b \leq c \Rightarrow a \leq c
-\end{align*}
-\$\$
-&lt;/span&gt;
-&lt;/center&gt;
+$$&lt;/p&gt;
 
 &lt;p&gt;This means that in the above graph, when there is already an edge from $S_5 \rightarrow S_3$ and then $S_3 \rightarrow S_4$, then the edge $S_5 \rightarrow S_4$
 is not giving us any extra information, this means it is implicit and can be removed.  &lt;br /&gt;
@@ -134,18 +288,12 @@ i.e $a \leq b$ in the poset of the students, then definitely $b$ will get a bett
 
 &lt;p&gt;The following are 2 example rankings that you can assign to the students (the rightmost being rank 1 and leftmost being rank 5):&lt;/p&gt;
 
-&lt;center&gt;
-&lt;span style=&quot;font-size: 0.8em&quot;&gt;
-\$\$
-\begin{equation}
-  \begin{split}
-    &amp;amp; S_5 \leq S_2 \leq S_3 \leq S_4 \leq S_1  \\
-    &amp;amp; S_5 \leq S_1 \leq S_3 \leq S_2 \leq S_4  \\
-  \end{split}
-\end{equation}
-\$\$
-&lt;/span&gt;
-&lt;/center&gt;
+&lt;p&gt;$$
+\begin{align}
+    &amp;amp; S_5 \leq S_2 \leq S_3 \leq S_4 \leq S_1  \newline
+    &amp;amp; S_5 \leq S_1 \leq S_3 \leq S_2 \leq S_4
+\end{align}
+$$&lt;/p&gt;
 
 &lt;p&gt;The above example rankings are examples of a &lt;a href=&quot;https://en.wikipedia.org/wiki/Total_order&quot;&gt;total order&lt;/a&gt;, the only additional property of a &lt;em&gt;“total order or a linear order”&lt;/em&gt;
 compared to a &lt;em&gt;“partial order”&lt;/em&gt; is that any two elements are comparable.&lt;/p&gt;
@@ -187,18 +335,14 @@ i.e it is in &lt;a href=&quot;https://en.wikipedia.org/wiki/♯P&quot;&gt;#P&lt;
 (#P complexity class contains the counting versions of all the decision problems in the NP complexity class)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;center&gt;
-&lt;span style=&quot;font-size: 0.6em&quot;&gt;
-\$\$
-\begin{equation}
-  \begin{split}
-    \text{COUNT_LIN_EXT}(P) &amp;amp;= \sum_{x \in min(P)} \text{COUNT_LIN_EXT}(P \setminus x),  \\
-    \text{where } min(P) &amp;amp; \text{ is the set of minimal elements of the poset P} \\
-  \end{split}
-\end{equation}
-\$\$
-&lt;/span&gt;
-&lt;/center&gt;
+&lt;p&gt;&lt;span style=&quot;font-size: 0.6em&quot;&gt;
+$$
+\begin{align}
+  \text{COUNT-LIN-EXT}(P) &amp;amp;= \sum_{x \in min(P)} \text{COUNT-LIN-EXT}(P \setminus x), \newline
+  \text{where } min(P) &amp;amp; \text{ is the set of minimal elements of the poset P} \newline
+\end{align} 
+$$
+&lt;/span&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;geometric-interpretation&quot;&gt;Geometric Interpretation&lt;/h2&gt;
 &lt;p&gt;For a geometrical representation of our problem, we will consider an n-element poset in n-dimensional space. Also, to make the representation bounded, we will restrict the space inside the unit cube ([0,1]&lt;sup&gt;n&lt;/sup&gt;). &lt;br /&gt;
