@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Vectorized Automatic Differentiation - VT space</title>
+<meta name="description" content="In the last post, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e, it works for any function, even those containing control flow statements like for-loops and if-conditions.">
+
+
+  <meta name="author" content="Vaibhav Thakkar">
+  
+  <meta property="article:author" content="Vaibhav Thakkar">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VT space">
+<meta property="og:title" content="Vectorized Automatic Differentiation">
+<meta property="og:url" content="https://vaithak.github.io/vectorized-autodiff-clad/">
+
+
+  <meta property="og:description" content="In the last post, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e, it works for any function, even those containing control flow statements like for-loops and if-conditions.">
+
+
+
+  <meta property="og:image" content="https://vaithak.github.io/assets/images/partial-derivative.png">
+
+
+
+  <meta name="twitter:site" content="@vaithak">
+  <meta name="twitter:title" content="Vectorized Automatic Differentiation">
+  <meta name="twitter:description" content="In the last post, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e, it works for any function, even those containing control flow statements like for-loops and if-conditions.">
+  <meta name="twitter:url" content="https://vaithak.github.io/vectorized-autodiff-clad/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://vaithak.github.io/assets/images/partial-derivative.png">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2023-08-22T00:00:00+05:30">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://vaithak.github.io/vectorized-autodiff-clad/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vaibhav Thakkar",
+      "url": "https://vaithak.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VT space Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@2.1.1/build/pseudocode.min.css">
+<script src="https://cdn.jsdelivr.net/npm/pseudocode@2.1.1/build/pseudocode.min.js"></script>
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          VT space
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/tags/">tags</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/year-archive/">posts</a>
+            </li>
+</ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/profile.jpg" alt="Vaibhav Thakkar" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vaibhav Thakkar</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Interested in working on autonomous systems and scientific softwares.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">India</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vaithak/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://vaithak.github.io" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/vaithak" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/vaithak" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/review/list/30560993-vaibhav-thakkar" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">goodreads</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:vaibhav.thakkar.22.12.99@gmail.com">
+            <meta itemprop="email" content="vaibhav.thakkar.22.12.99@gmail.com">
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Vectorized Automatic Differentiation">
+    <meta itemprop="description" content="In the last post, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e, it works for any function, even those containing control flow statements like for-loops and if-conditions.">
+    <meta itemprop="datePublished" content="2023-08-22T00:00:00+05:30">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Vectorized Automatic Differentiation
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li>
+<a href="#recap-of-forward-mode-ad">Recap of forward mode AD</a><ul><li><a href="#working-example">Working Example</a></li></ul>
+</li>
+<li>
+<a href="#vectorized-forward-mode-ad">Vectorized forward mode AD</a><ul>
+<li><a href="#defining-the-proposed-solution">Defining the proposed solution</a></li>
+<li><a href="#working-example-1">Working example</a></li>
+</ul>
+</li>
+<li><a href="#benefits">Benefits</a></li>
+<li><a href="#progress-in-clad">Progress in clad</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>In the <a href="/autodiff-clad">last post</a>, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e, it works for any function, even those containing control flow statements like for-loops and if-conditions.</p>
+
+<p>This post will discuss how we can vectorize that approach. Specifically, we will discuss vectorizing forward mode AD (although reverse mode AD can be vectorized in a similar way).</p>
+
+<p>The examples shared in this post are from my implementation of vectorized forward mode AD in the <a href="https://github.com/vgvassilev/clad">clad project, a source transformation based AD tool</a>, as part of the <a href="https://summerofcode.withgoogle.com/programs/2023/projects/Ro5V6AT1">Google Summer of Code program</a>.</p>
+
+<center>
+    <img src="/assets/images/gsoc-cern.png" width="80%">
+</center>
+
+<h2 id="recap-of-forward-mode-ad">Recap of forward mode AD</h2>
+<p>Let’s briefly recap the basics of forward mode AD with an example, this will also help in building an intuition for the vectorized version.<br>
+Let’s consider a simple example:</p>
+
+<p>$$
+\begin{align}
+    f : \mathbb{R^3} &amp;\rightarrow \mathbb{R} \newline
+    f(x, y, z) &amp;= x+y+z \newline 
+    \text{  compute } &amp; \frac{\partial{f}}{\partial{x}}
+\end{align}
+$$</p>
+
+<p>Steps for computing the derivating using forward mode AD,</p>
+<ul>
+  <li>Form the computation graph, with nodes being inputs and the operators.</li>
+</ul>
+<center>
+    <img src="/assets/images/autodiff-example-f.png" width="80%">
+</center>
+
+<ul>
+  <li>Computing the function is equivalent to going through this graph in forward direction.</li>
+  <li>Derivative can also be computed in the similar fashion, difference being that each node computes $\frac{\partial{\text{ (node output) }}}{\partial{x}}$, thus propagating to $\frac{\partial{f}}{\partial{x}}$ in the end.
+    <ul>
+      <li>This means that each input node is initialized with a 0 or 1 value. (1 for input node $x$ as $\frac{\partial{x}}{\partial{x}} = 1$, whereas other input nodes are assigned 0 as initial value).</li>
+      <li>At each operator node, we apply basic rules of differentiation (for ex. sum rule at $+$ node and product rule at $*$ node).</li>
+    </ul>
+  </li>
+</ul>
+<figure>
+    <center>
+        <img src="/assets/images/autodiff-example-f_x.png" width="80%">
+        <figcaption> Computing $\frac{\partial{f}}{\partial{x}}$ </figcaption>
+    </center>
+</figure>
+
+<h3 id="working-example">Working Example</h3>
+<p>Let’s try to generate the derivative function for this example with clad:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">double</span> <span class="nf">f</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">,</span> <span class="kt">double</span> <span class="n">z</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Call clad to generate the derivative of f wrt x.</span>
+  <span class="k">auto</span> <span class="n">f_dx_dz</span> <span class="o">=</span> <span class="n">clad</span><span class="o">::</span><span class="n">differentiate</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"x"</span><span class="p">);</span>
+
+  <span class="c1">// Execute the generated derivative function.  </span>
+  <span class="kt">double</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">f_dx</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="cm">/*x=*/</span> <span class="mi">3</span><span class="p">,</span> <span class="cm">/*y=*/</span><span class="mi">4</span><span class="p">,</span> <span class="cm">/*z=*/</span> <span class="mi">5</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<figure>
+    <center>
+        <figcaption> Function generated by clad for differentiating $f$ w.r.t $x$.</figcaption>
+        <img src="/assets/images/down-arrow.svg" style="width: 10%">
+    </center>
+</figure>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">double</span> <span class="nf">f_darg0</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">,</span> <span class="kt">double</span> <span class="n">z</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">_d_x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="n">_d_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="n">_d_z</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">_d_x</span> <span class="o">+</span> <span class="n">_d_y</span> <span class="o">+</span> <span class="n">_d_z</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="vectorized-forward-mode-ad">Vectorized forward mode AD</h2>
+
+<p>Now that we have seen how to compute $\frac{\partial{f}}{\partial{x}}$, how about computing $\frac{\partial{f}}{\partial{y}}$, and similarly $\frac{\partial{f}}{\partial{z}}$ ?</p>
+<figure>
+    <center>
+        <img src="/assets/images/autodiff-example-f_y.png" width="80%">
+        <figcaption> Computing $\frac{\partial{f}}{\partial{y}}$ </figcaption>
+    </center>
+</figure>
+<hr>
+
+<figure>
+    <center>
+        <img src="/assets/images/autodiff-example-f_z.png" width="80%">
+        <figcaption> Computing $\frac{\partial{f}}{\partial{z}}$ </figcaption>
+    </center> 
+</figure>
+
+<p>Although, the strategy is pretty similar, it requires 3 passes for computing partial derivatives w.r.t the 3 scalar inputs of the function. Can we combine these?</p>
+
+<ul>
+  <li>At each node, we maintain a vector, storing the complete gradient of that node’s output w.r.t all the input parameters , $\nabla{n} = \left[ \frac{\partial{n}}{\partial{x}}, \frac{\partial{n}}{\partial{y}}, \frac{\partial{n}}{\partial{z}} \right]$ (where $n = \text{node output}$).</li>
+  <li>All operations are now vector operations, for example, applying the sum rule will result in addition of vectors.</li>
+  <li>Initialization for input nodes are done using <a href="https://en.wikipedia.org/wiki/One-hot">one-hot</a> vectors.</li>
+</ul>
+
+<figure>
+    <center>
+        <img src="/assets/images/autodiff-example-f_grad.png">
+        <figcaption> Computing $\nabla{f}$ </figcaption>
+    </center> 
+</figure>
+
+<h3 id="defining-the-proposed-solution">Defining the proposed solution</h3>
+<p>For computing gradient of a function with $n$-dimensional input ($\in \mathbb{R^n}$) - forward mode requires n forward passes.</p>
+
+<p>We can do this in a single forwad pass, if instead of accumulating a single scalar value of derivative with respect to a particular node, we maintain a gradient vector at each node.</p>
+
+<center>
+  <img src="/assets/images/autodiff-forward.png" style="width: 60%"> $\rightarrow$
+  <img src="/assets/images/autodiff-vector-fwd.png" style="width: 26%">
+  <figcaption> Reference: <a href="https://jnamaral.github.io/icpp20/slides/Hueckelheim_Vector.pdf"> jnamaral.github.io </a></figcaption>
+</center>
+
+<h3 id="working-example-1">Working example</h3>
+<p>Same example function, but now computing $\frac{\partial{f}}{\partial{x}}$ and $\frac{\partial{f}}{\partial{z}}$ together.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">double</span> <span class="nf">f</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">,</span> <span class="kt">double</span> <span class="n">z</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Call clad to generate the derivative of f wrt x and z.</span>
+  <span class="k">auto</span> <span class="n">f_dx_dz</span> <span class="o">=</span> <span class="n">clad</span><span class="o">::</span><span class="n">differentiate</span> <span class="o">&lt;</span><span class="n">clad</span><span class="o">::</span><span class="n">opts</span><span class="o">::</span><span class="n">vector_mode</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"x,z"</span><span class="p">);</span>
+
+  <span class="c1">// Execute the generated derivative function.  </span>
+  <span class="kt">double</span> <span class="n">dx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dz</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">f_dx</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="cm">/*x=*/</span> <span class="mi">3</span><span class="p">,</span> <span class="cm">/*y=*/</span><span class="mi">4</span><span class="p">,</span> <span class="cm">/*z=*/</span> <span class="mi">5</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dx</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dz</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<figure>
+    <center>
+        <figcaption> Function generated by clad for differentiating $f$ w.r.t $x$ and $z$ using vector mode.</figcaption>
+        <img src="/assets/images/down-arrow.svg" style="width: 10%">
+    </center>
+</figure>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">f_dvec_0_2</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">,</span> <span class="kt">double</span> <span class="n">z</span><span class="p">,</span> <span class="kt">double</span> <span class="o">*</span><span class="n">_d_x</span><span class="p">,</span> <span class="kt">double</span> <span class="o">*</span><span class="n">_dz</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">d_vec_x</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+  <span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">d_vec_y</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
+  <span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">d_vec_z</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">};</span>
+  <span class="p">{</span>
+    <span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">d_vec_ret</span> <span class="o">=</span> <span class="n">d_vec_x</span> <span class="o">+</span> <span class="n">d_vec_y</span> <span class="o">+</span> <span class="n">d_vec_z</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">_d_x</span> <span class="o">=</span> <span class="n">d_vec_ret</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="o">*</span><span class="n">_d_z</span> <span class="o">=</span> <span class="n">d_vec_ret</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Note that, now in 1 forward pass, we can compute derivate w.r.t multiple params together.<br>
+The main change in interface is using the option <code class="language-plaintext highlighter-rouge">clad::opts::vector_mode</code>.</p>
+
+<h2 id="benefits">Benefits</h2>
+<p>Now that each node requires computing a vector, this requires more memory (also more time goes into these memory allocation calls), this must be offset by some improvement in the computing efficiency.</p>
+<ul>
+  <li>This can prevent recomputation of some expensive functions, which would have executed in non-vectorized version due
+to multiple forward passes.</li>
+  <li>This approach can take benefit of the hardware’s vectorization and parallelization capabilities (using SIMD techniques).</li>
+</ul>
+<center>
+    <img src="/assets/images/vector-operations.png" style="width: 80%">
+</center>
+
+<h2 id="progress-in-clad">Progress in clad</h2>
+<p>The complete progress report of this project along with the missing features and future goals can be <a href="https://gist.github.com/vaithak/82125fa9618c81741dcecb88f0e76d4b">seen here</a>, and a basic documentation of using this vectorized mode is <a href="https://clad.readthedocs.io/en/latest/user/UsingVectorMode.html">available here</a>.</p>
+
+<p>The following is a more complex example of differentiation functions consisting of arrays parameters using vectorized forward mode AD implementation in clad.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// A function fo weighted sum of array elements.</span>
+<span class="kt">double</span> <span class="nf">weighted_sum</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">arr</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">weights</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">res</span> <span class="o">+=</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<figure>
+    <center>
+        <figcaption> Using clad's vector mode for differentiating w.r.t `arr` and `weights` parameters.</figcaption>
+        <img src="/assets/images/down-arrow.svg" style="width: 10%">
+    </center>
+</figure>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">weighted_sum_dvec_0_1</span><span class="p">(</span><span class="kt">double</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="kt">double</span> <span class="o">*</span><span class="n">weights</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">clad</span><span class="o">::</span><span class="n">array_ref</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">_d_arr</span><span class="p">,</span> <span class="n">clad</span><span class="o">::</span><span class="n">array_ref</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">_d_weights</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Calculating total number of independent variables.</span>
+  <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">indepVarCount</span> <span class="o">=</span> <span class="n">_d_arr</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">+</span> <span class="n">_d_weights</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+
+  <span class="c1">// Initializing each row with a one-hot vector is equivalent to initializing an</span>
+  <span class="c1">// identity matrix (possible shifted and rectangular) for complete array.</span>
+  <span class="n">clad</span><span class="o">::</span><span class="n">matrix</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">_d_vector_arr</span>     <span class="o">=</span> <span class="n">clad</span><span class="o">::</span><span class="n">identity_matrix</span><span class="p">(</span><span class="n">_d_arr</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">indepVarCount</span><span class="p">,</span> <span class="mi">0UL</span><span class="p">);</span>
+  <span class="n">clad</span><span class="o">::</span><span class="n">matrix</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">_d_vector_weights</span> <span class="o">=</span> <span class="n">clad</span><span class="o">::</span><span class="n">identity_matrix</span><span class="p">(</span><span class="n">_d_weights</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">indepVarCount</span><span class="p">,</span> <span class="n">_d_arr</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+  <span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">_d_vector_n</span>           <span class="o">=</span> <span class="n">clad</span><span class="o">::</span><span class="n">zero_vector</span><span class="p">(</span><span class="n">indepVarCount</span><span class="p">);</span>
+
+  <span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">_d_vector_res</span><span class="p">(</span><span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">indepVarCount</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+  <span class="kt">double</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="p">{</span>
+    <span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">_d_vector_i</span><span class="p">(</span><span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">indepVarCount</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">_d_vector_res</span> <span class="o">+=</span> <span class="p">(</span><span class="n">_d_vector_weights</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">_d_vector_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+      <span class="n">res</span> <span class="o">+=</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="p">{</span>
+    <span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">_d_vector_return</span><span class="p">(</span><span class="n">clad</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">indepVarCount</span><span class="p">,</span> <span class="n">_d_vector_res</span><span class="p">));</span>
+    <span class="n">_d_arr</span> <span class="o">=</span> <span class="n">_d_vector_return</span><span class="p">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">0UL</span><span class="p">,</span> <span class="n">_d_arr</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+    <span class="n">_d_weights</span> <span class="o">=</span> <span class="n">_d_vector_return</span><span class="p">.</span><span class="n">slice</span><span class="p">(</span><span class="n">_d_arr</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">_d_weights</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#autodiff" class="page__taxonomy-item" rel="tag">autodiff</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-08-22T00:00:00+05:30">August 22, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?via=vaithak&text=Vectorized+Automatic+Differentiation%20https%3A%2F%2Fvaithak.github.io%2Fvectorized-autodiff-clad%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fvaithak.github.io%2Fvectorized-autodiff-clad%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fvaithak.github.io%2Fvectorized-autodiff-clad%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/autodiff-clad/" class="pagination--pager" title="Automatic Differentiation
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/llvm.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/autodiff-clad/" rel="permalink">Automatic Differentiation
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Given a continuos function $f(x)$, how do you compute it’s derivative $f’(x_0)$  for a particular input $x_0$ computationally?
+Similarly, for a vector valued...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/gsoc.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/gsoc-project-overview-part1/" rel="permalink">Counting Linear Extensions: GSoC Project Overview
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          14 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">I have been selected as a student developer in Google Summer of Code under the GeomScale organization &amp; will be spending the upcoming 10 Weeks working on...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/vaithak" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/vaithak" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://www.goodreads.com/review/list/30560993-vaibhav-thakkar" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i> goodreads</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2023 Vaibhav Thakkar. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://vaithak.github.io/vectorized-autodiff-clad/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/vectorized-autodiff-clad"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-vaithak-github-io-my-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

@@ -10,4 +10,10 @@ var store = [{
         "tags": ["autodiff"],
         "url": "/autodiff-clad/",
         "teaser": "/assets/images/llvm.png"
+      },{
+        "title": "Vectorized Automatic Differentiation",
+        "excerpt":"In the last post, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e, it works for any function, even those containing control flow statements like for-loops and if-conditions. This post will discuss how we can vectorize that...","categories": [],
+        "tags": ["autodiff"],
+        "url": "/vectorized-autodiff-clad/",
+        "teaser": "/assets/images/partial-derivative.png"
       }]
