@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2023-08-22T01:06:48+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">VT space</title><subtitle>My personal website.</subtitle><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">Vectorized Automatic Differentiation</title><link href="https://vaithak.github.io/vectorized-autodiff-clad/" rel="alternate" type="text/html" title="Vectorized Automatic Differentiation" /><published>2023-08-22T00:00:00+05:30</published><updated>2023-08-22T00:00:00+05:30</updated><id>https://vaithak.github.io/vectorized-autodiff-clad</id><content type="html" xml:base="https://vaithak.github.io/vectorized-autodiff-clad/">&lt;p&gt;In the &lt;a href=&quot;/autodiff-clad&quot;&gt;last post&lt;/a&gt;, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e, it works for any function, even those containing control flow statements like for-loops and if-conditions.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2023-09-20T17:39:48+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">VT space</title><subtitle>My personal website.</subtitle><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">Vectorized Automatic Differentiation</title><link href="https://vaithak.github.io/vectorized-autodiff-clad/" rel="alternate" type="text/html" title="Vectorized Automatic Differentiation" /><published>2023-08-22T00:00:00+05:30</published><updated>2023-08-22T00:00:00+05:30</updated><id>https://vaithak.github.io/vectorized-autodiff-clad</id><content type="html" xml:base="https://vaithak.github.io/vectorized-autodiff-clad/">&lt;p&gt;In the &lt;a href=&quot;/autodiff-clad&quot;&gt;last post&lt;/a&gt;, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e., it works for any function, even those containing control flow statements like for-loops and if-conditions.&lt;/p&gt;
 
 &lt;p&gt;This post will discuss how we can vectorize that approach. Specifically, we will discuss vectorizing forward mode AD (although reverse mode AD can be vectorized in a similar way).&lt;/p&gt;
 
-&lt;p&gt;The examples shared in this post are from my implementation of vectorized forward mode AD in the &lt;a href=&quot;https://github.com/vgvassilev/clad&quot;&gt;clad project, a source transformation based AD tool&lt;/a&gt;, as part of the &lt;a href=&quot;https://summerofcode.withgoogle.com/programs/2023/projects/Ro5V6AT1&quot;&gt;Google Summer of Code program&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples shared in this post are from my implementation of vectorized forward mode AD in the &lt;a href=&quot;https://github.com/vgvassilev/clad&quot;&gt;Clad project, a source transformation based AD tool&lt;/a&gt;, as part of the &lt;a href=&quot;https://summerofcode.withgoogle.com/programs/2023/projects/Ro5V6AT1&quot;&gt;Google Summer of Code program&lt;/a&gt;.&lt;/p&gt;
 
 &lt;center&gt;
     &lt;img src=&quot;/assets/images/gsoc-cern.png&quot; width=&quot;80%&quot; /&gt;
@@ -30,10 +30,10 @@ $$&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Computing the function is equivalent to going through this graph in forward direction.&lt;/li&gt;
-  &lt;li&gt;Derivative can also be computed in the similar fashion, difference being that each node computes $\frac{\partial{\text{ (node output) }}}{\partial{x}}$, thus propagating to $\frac{\partial{f}}{\partial{x}}$ in the end.
+  &lt;li&gt;Derivatives can also be computed in the similar fashion, difference being that each node computes $\frac{\partial{\text{ (node output) }}}{\partial{x}}$, thus propagating to $\frac{\partial{f}}{\partial{x}}$ in the end.
     &lt;ul&gt;
-      &lt;li&gt;This means that each input node is initialized with a 0 or 1 value. (1 for input node $x$ as $\frac{\partial{x}}{\partial{x}} = 1$, whereas other input nodes are assigned 0 as initial value).&lt;/li&gt;
-      &lt;li&gt;At each operator node, we apply basic rules of differentiation (for ex. sum rule at $+$ node and product rule at $*$ node).&lt;/li&gt;
+      &lt;li&gt;This means that each input node is initialized with a 0 or 1 value. (1 for input node $x$ as $\frac{\partial{x}}{\partial{x}} = 1$, whereas other input nodes are assigned 0 as the initial value).&lt;/li&gt;
+      &lt;li&gt;At each operator node, we apply basic rules of differentiation (for example, using the sum rule at $+$ node and the product rule at $*$ node).&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -93,12 +93,12 @@ $$&lt;/p&gt;
     &lt;/center&gt; 
 &lt;/figure&gt;
 
-&lt;p&gt;Although, the strategy is pretty similar, it requires 3 passes for computing partial derivatives w.r.t the 3 scalar inputs of the function. Can we combine these?&lt;/p&gt;
+&lt;p&gt;Although, the strategy is pretty similar, it requires 3 passes for computing partial derivatives w.r.t. the 3 scalar inputs of the function. Can we combine these?&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;At each node, we maintain a vector, storing the complete gradient of that node’s output w.r.t all the input parameters , $\nabla{n} = \left[ \frac{\partial{n}}{\partial{x}}, \frac{\partial{n}}{\partial{y}}, \frac{\partial{n}}{\partial{z}} \right]$ (where $n = \text{node output}$).&lt;/li&gt;
-  &lt;li&gt;All operations are now vector operations, for example, applying the sum rule will result in addition of vectors.&lt;/li&gt;
-  &lt;li&gt;Initialization for input nodes are done using &lt;a href=&quot;https://en.wikipedia.org/wiki/One-hot&quot;&gt;one-hot&lt;/a&gt; vectors.&lt;/li&gt;
+  &lt;li&gt;At each node, we maintain a vector, storing the complete gradient of that node’s output w.r.t. all the input parameters , $\nabla{n} = \left[ \frac{\partial{n}}{\partial{x}}, \frac{\partial{n}}{\partial{y}}, \frac{\partial{n}}{\partial{z}} \right]$ (where $n = \text{node output}$).&lt;/li&gt;
+  &lt;li&gt;All operations are now vector operations, for example, applying the sum rule will result in the addition of vectors.&lt;/li&gt;
+  &lt;li&gt;Initialization for input nodes is done using &lt;a href=&quot;https://en.wikipedia.org/wiki/One-hot&quot;&gt;one-hot&lt;/a&gt; vectors.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;figure&gt;
@@ -109,9 +109,9 @@ $$&lt;/p&gt;
 &lt;/figure&gt;
 
 &lt;h3 id=&quot;defining-the-proposed-solution&quot;&gt;Defining the proposed solution&lt;/h3&gt;
-&lt;p&gt;For computing gradient of a function with $n$-dimensional input ($\in \mathbb{R^n}$) - forward mode requires n forward passes.&lt;/p&gt;
+&lt;p&gt;For computing the gradient of a function with $n$-dimensional input ($\in \mathbb{R^n}$) - forward mode requires n forward passes.&lt;/p&gt;
 
-&lt;p&gt;We can do this in a single forwad pass, if instead of accumulating a single scalar value of derivative with respect to a particular node, we maintain a gradient vector at each node.&lt;/p&gt;
+&lt;p&gt;We can do this in a single forward pass, if instead of accumulating a single scalar value of the derivative with respect to a particular node, we maintain a gradient vector at each node.&lt;/p&gt;
 
 &lt;center&gt;
   &lt;img src=&quot;/assets/images/autodiff-forward.png&quot; style=&quot;width: 60%&quot; /&gt; $\rightarrow$
@@ -138,7 +138,7 @@ $$&lt;/p&gt;
 
 &lt;figure&gt;
     &lt;center&gt;
-        &lt;figcaption&gt; Function generated by clad for differentiating $f$ w.r.t $x$ and $z$ using vector mode.&lt;/figcaption&gt;
+        &lt;figcaption&gt; Function generated by clad for differentiating $f$ w.r.t. $x$ and $z$ using vector mode.&lt;/figcaption&gt;
         &lt;img src=&quot;/assets/images/down-arrow.svg&quot; style=&quot;width: 10%&quot; /&gt;
     &lt;/center&gt;
 &lt;/figure&gt;
@@ -156,24 +156,24 @@ $$&lt;/p&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Note that, now in 1 forward pass, we can compute derivate w.r.t multiple params together.&lt;br /&gt;
-The main change in interface is using the option &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;clad::opts::vector_mode&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Note that, now in a single forward pass, we can compute derivate w.r.t. multiple parameters together.&lt;br /&gt;
+The main change in the interface is using the option &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;clad::opts::vector_mode&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;benefits&quot;&gt;Benefits&lt;/h2&gt;
-&lt;p&gt;Now that each node requires computing a vector, this requires more memory (also more time goes into these memory allocation calls), this must be offset by some improvement in the computing efficiency.&lt;/p&gt;
+&lt;p&gt;Now that each node requires computing a vector, this requires more memory (and more time goes into these memory allocation calls), which must be offset by some improvement in the computing efficiency.&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;This can prevent recomputation of some expensive functions, which would have executed in non-vectorized version due
+  &lt;li&gt;This can prevent the re-computation of some expensive functions, which would have executed in a non-vectorized version due
 to multiple forward passes.&lt;/li&gt;
-  &lt;li&gt;This approach can take benefit of the hardware’s vectorization and parallelization capabilities (using SIMD techniques).&lt;/li&gt;
+  &lt;li&gt;This approach can take advantage of the hardware’s vectorization and parallelization capabilities (using SIMD techniques).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;center&gt;
     &lt;img src=&quot;/assets/images/vector-operations.png&quot; style=&quot;width: 80%&quot; /&gt;
 &lt;/center&gt;
 
-&lt;h2 id=&quot;progress-in-clad&quot;&gt;Progress in clad&lt;/h2&gt;
+&lt;h2 id=&quot;progress-in-clad&quot;&gt;Progress in Clad&lt;/h2&gt;
 &lt;p&gt;The complete progress report of this project along with the missing features and future goals can be &lt;a href=&quot;https://gist.github.com/vaithak/82125fa9618c81741dcecb88f0e76d4b&quot;&gt;seen here&lt;/a&gt;, and a basic documentation of using this vectorized mode is &lt;a href=&quot;https://clad.readthedocs.io/en/latest/user/UsingVectorMode.html&quot;&gt;available here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;The following is a more complex example of differentiation functions consisting of arrays parameters using vectorized forward mode AD implementation in clad.&lt;/p&gt;
+&lt;p&gt;The following is a more complex example of differentiation functions consisting of array parameters using the vectorized forward mode AD implementation in Clad.&lt;/p&gt;
 
 &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// A function fo weighted sum of array elements.&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;weighted_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -187,7 +187,7 @@ to multiple forward passes.&lt;/li&gt;
 
 &lt;figure&gt;
     &lt;center&gt;
-        &lt;figcaption&gt; Using clad&apos;s vector mode for differentiating w.r.t `arr` and `weights` parameters.&lt;/figcaption&gt;
+        &lt;figcaption&gt; Using Clad&apos;s vector mode for differentiating w.r.t. `arr` and `weights` parameters.&lt;/figcaption&gt;
         &lt;img src=&quot;/assets/images/down-arrow.svg&quot; style=&quot;width: 10%&quot; /&gt;
     &lt;/center&gt;
 &lt;/figure&gt;
@@ -219,7 +219,7 @@ to multiple forward passes.&lt;/li&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><category term="autodiff" /><summary type="html">In the last post, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e, it works for any function, even those containing control flow statements like for-loops and if-conditions.</summary></entry><entry><title type="html">Automatic Differentiation</title><link href="https://vaithak.github.io/autodiff-clad/" rel="alternate" type="text/html" title="Automatic Differentiation" /><published>2023-05-14T00:00:00+05:30</published><updated>2023-05-14T00:00:00+05:30</updated><id>https://vaithak.github.io/autodiff-clad</id><content type="html" xml:base="https://vaithak.github.io/autodiff-clad/">&lt;p&gt;Given a continuos function $f(x)$, how do you compute it’s derivative $f’(x_0)$  for a particular input $x_0$ computationally?&lt;br /&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><category term="autodiff" /><summary type="html">In the last post, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e., it works for any function, even those containing control flow statements like for-loops and if-conditions.</summary></entry><entry><title type="html">Automatic Differentiation</title><link href="https://vaithak.github.io/autodiff-clad/" rel="alternate" type="text/html" title="Automatic Differentiation" /><published>2023-05-14T00:00:00+05:30</published><updated>2023-05-14T00:00:00+05:30</updated><id>https://vaithak.github.io/autodiff-clad</id><content type="html" xml:base="https://vaithak.github.io/autodiff-clad/">&lt;p&gt;Given a continuos function $f(x)$, how do you compute it’s derivative $f’(x_0)$  for a particular input $x_0$ computationally?&lt;br /&gt;
 Similarly, for a vector valued function $f(\vec{\boldsymbol{x}})$, how do we compute its gradient $\nabla_{\vec{\boldsymbol{x_0}}} f(\vec{\boldsymbol{x}})$?
 Where $\vec{\boldsymbol{x}}$ is an $n$ dimensional vector and&lt;/p&gt;
 
