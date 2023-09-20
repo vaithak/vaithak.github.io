@@ -9,11 +9,11 @@ header:
   teaser: /assets/images/partial-derivative.png
 ---
 
-In the [last post](/autodiff-clad), we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e, it works for any function, even those containing control flow statements like for-loops and if-conditions.  
+In the [last post](/autodiff-clad), we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e., it works for any function, even those containing control flow statements like for-loops and if-conditions.  
 
 This post will discuss how we can vectorize that approach. Specifically, we will discuss vectorizing forward mode AD (although reverse mode AD can be vectorized in a similar way).  
 
-The examples shared in this post are from my implementation of vectorized forward mode AD in the [clad project, a source transformation based AD tool](https://github.com/vgvassilev/clad), as part of the [Google Summer of Code program](https://summerofcode.withgoogle.com/programs/2023/projects/Ro5V6AT1).
+The examples shared in this post are from my implementation of vectorized forward mode AD in the [Clad project, a source transformation based AD tool](https://github.com/vgvassilev/clad), as part of the [Google Summer of Code program](https://summerofcode.withgoogle.com/programs/2023/projects/Ro5V6AT1).
 
 <center>
     <img src="/assets/images/gsoc-cern.png" width="80%"/>
@@ -38,9 +38,9 @@ Steps for computing the derivating using forward mode AD,
 </center>
 
 - Computing the function is equivalent to going through this graph in forward direction.
-- Derivative can also be computed in the similar fashion, difference being that each node computes $\frac{\partial{\text{ (node output) }}}{\partial{x}}$, thus propagating to $\frac{\partial{f}}{\partial{x}}$ in the end.
-    - This means that each input node is initialized with a 0 or 1 value. (1 for input node $x$ as $\frac{\partial{x}}{\partial{x}} = 1$, whereas other input nodes are assigned 0 as initial value).
-    - At each operator node, we apply basic rules of differentiation (for ex. sum rule at $+$ node and product rule at $*$ node).
+- Derivatives can also be computed in the similar fashion, difference being that each node computes $\frac{\partial{\text{ (node output) }}}{\partial{x}}$, thus propagating to $\frac{\partial{f}}{\partial{x}}$ in the end.
+    - This means that each input node is initialized with a 0 or 1 value. (1 for input node $x$ as $\frac{\partial{x}}{\partial{x}} = 1$, whereas other input nodes are assigned 0 as the initial value).
+    - At each operator node, we apply basic rules of differentiation (for example, using the sum rule at $+$ node and the product rule at $*$ node).
 <figure>
     <center>
         <img src="/assets/images/autodiff-example-f_x.png" width="80%"/>
@@ -98,11 +98,11 @@ Now that we have seen how to compute $\frac{\partial{f}}{\partial{x}}$, how abou
     </center> 
 </figure>  
 
-Although, the strategy is pretty similar, it requires 3 passes for computing partial derivatives w.r.t the 3 scalar inputs of the function. Can we combine these?
+Although, the strategy is pretty similar, it requires 3 passes for computing partial derivatives w.r.t. the 3 scalar inputs of the function. Can we combine these?
 
-- At each node, we maintain a vector, storing the complete gradient of that node's output w.r.t all the input parameters , $\nabla{n} = \left[ \frac{\partial{n}}{\partial{x}}, \frac{\partial{n}}{\partial{y}}, \frac{\partial{n}}{\partial{z}} \right]$ (where $n = \text{node output}$).
-- All operations are now vector operations, for example, applying the sum rule will result in addition of vectors.
-- Initialization for input nodes are done using [one-hot](https://en.wikipedia.org/wiki/One-hot) vectors.  
+- At each node, we maintain a vector, storing the complete gradient of that node's output w.r.t. all the input parameters , $\nabla{n} = \left[ \frac{\partial{n}}{\partial{x}}, \frac{\partial{n}}{\partial{y}}, \frac{\partial{n}}{\partial{z}} \right]$ (where $n = \text{node output}$).
+- All operations are now vector operations, for example, applying the sum rule will result in the addition of vectors.
+- Initialization for input nodes is done using [one-hot](https://en.wikipedia.org/wiki/One-hot) vectors.  
 
 <figure>
     <center>
@@ -112,9 +112,9 @@ Although, the strategy is pretty similar, it requires 3 passes for computing par
 </figure>  
 
 ### Defining the proposed solution
-For computing gradient of a function with $n$-dimensional input ($\in \mathbb{R^n}$) - forward mode requires n forward passes.  
+For computing the gradient of a function with $n$-dimensional input ($\in \mathbb{R^n}$) - forward mode requires n forward passes.  
 
-We can do this in a single forwad pass, if instead of accumulating a single scalar value of derivative with respect to a particular node, we maintain a gradient vector at each node.
+We can do this in a single forward pass, if instead of accumulating a single scalar value of the derivative with respect to a particular node, we maintain a gradient vector at each node.
 
 <center>
   <img src="/assets/images/autodiff-forward.png" style="width: 60%"/> $\rightarrow$
@@ -143,7 +143,7 @@ int main() {
 
 <figure>
     <center>
-        <figcaption> Function generated by clad for differentiating $f$ w.r.t $x$ and $z$ using vector mode.</figcaption>
+        <figcaption> Function generated by clad for differentiating $f$ w.r.t. $x$ and $z$ using vector mode.</figcaption>
         <img src="/assets/images/down-arrow.svg" style="width: 10%"/>
     </center>
 </figure>
@@ -162,22 +162,22 @@ void f_dvec_0_2(double x, double y, double z, double *_d_x, double *_dz) {
 }
 ```
 
-Note that, now in 1 forward pass, we can compute derivate w.r.t multiple params together.  
-The main change in interface is using the option `clad::opts::vector_mode`.
+Note that, now in a single forward pass, we can compute derivate w.r.t. multiple parameters together.  
+The main change in the interface is using the option `clad::opts::vector_mode`.
 
 ## Benefits
-Now that each node requires computing a vector, this requires more memory (also more time goes into these memory allocation calls), this must be offset by some improvement in the computing efficiency.
-- This can prevent recomputation of some expensive functions, which would have executed in non-vectorized version due
+Now that each node requires computing a vector, this requires more memory (and more time goes into these memory allocation calls), which must be offset by some improvement in the computing efficiency.
+- This can prevent the re-computation of some expensive functions, which would have executed in a non-vectorized version due
   to multiple forward passes.
-- This approach can take benefit of the hardware's vectorization and parallelization capabilities (using SIMD techniques).
+- This approach can take advantage of the hardware's vectorization and parallelization capabilities (using SIMD techniques).
 <center>
     <img src="/assets/images/vector-operations.png" style="width: 80%"/>
 </center>
 
-## Progress in clad
+## Progress in Clad
 The complete progress report of this project along with the missing features and future goals can be [seen here](https://gist.github.com/vaithak/82125fa9618c81741dcecb88f0e76d4b), and a basic documentation of using this vectorized mode is [available here](https://clad.readthedocs.io/en/latest/user/UsingVectorMode.html).
 
-The following is a more complex example of differentiation functions consisting of arrays parameters using vectorized forward mode AD implementation in clad.  
+The following is a more complex example of differentiation functions consisting of array parameters using the vectorized forward mode AD implementation in Clad.  
 
 ```cpp
 // A function fo weighted sum of array elements.
@@ -192,7 +192,7 @@ double weighted_sum(double* arr, double* weights, int n) {
 
 <figure>
     <center>
-        <figcaption> Using clad's vector mode for differentiating w.r.t `arr` and `weights` parameters.</figcaption>
+        <figcaption> Using Clad's vector mode for differentiating w.r.t. `arr` and `weights` parameters.</figcaption>
         <img src="/assets/images/down-arrow.svg" style="width: 10%"/>
     </center>
 </figure>
