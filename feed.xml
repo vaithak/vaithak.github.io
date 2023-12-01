@@ -1,4 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2023-09-20T17:39:48+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">VT space</title><subtitle>My personal website.</subtitle><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">Vectorized Automatic Differentiation</title><link href="https://vaithak.github.io/vectorized-autodiff-clad/" rel="alternate" type="text/html" title="Vectorized Automatic Differentiation" /><published>2023-08-22T00:00:00+05:30</published><updated>2023-08-22T00:00:00+05:30</updated><id>https://vaithak.github.io/vectorized-autodiff-clad</id><content type="html" xml:base="https://vaithak.github.io/vectorized-autodiff-clad/">&lt;p&gt;In the &lt;a href=&quot;/autodiff-clad&quot;&gt;last post&lt;/a&gt;, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e., it works for any function, even those containing control flow statements like for-loops and if-conditions.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://vaithak.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://vaithak.github.io/" rel="alternate" type="text/html" /><updated>2023-12-01T23:04:08+05:30</updated><id>https://vaithak.github.io/feed.xml</id><title type="html">VT space</title><subtitle>My personal website.</subtitle><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><entry><title type="html">Some thoughts on self-learning</title><link href="https://vaithak.github.io/self-learning/" rel="alternate" type="text/html" title="Some thoughts on self-learning" /><published>2023-12-01T00:00:00+05:30</published><updated>2023-12-01T00:00:00+05:30</updated><id>https://vaithak.github.io/self-learning</id><content type="html" xml:base="https://vaithak.github.io/self-learning/">&lt;p&gt;&lt;em&gt;Context:&lt;/em&gt; I recently had a discussion with a friend about the process of self-learning, which is very essential for scientific and engineering disciplines. During which, the point of maintaining consistency or flow state came up. I have struggled with this myself, and have had a disorganized pile of thoughts and conjectures about this for a long time. This post aims to organize them a bit.&lt;/p&gt;
+
+&lt;p&gt;Note: I am writing this late at night, so expecting many grammatical and structural mistakes, but I don’t care about perfection here.&lt;/p&gt;
+
+&lt;h2 id=&quot;learning-equiv-detective-work&quot;&gt;Learning $\equiv$ Detective work&lt;/h2&gt;
+&lt;p&gt;There is an inherent beauty in acquiring knowledge (ज्ञान). Several great human minds have talked about the importance of this,  some notable and my favourite examples being:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The goal of mankind is knowledge . . . What man “learns” is really what he
+	discovers by taking the cover off his own soul, which is a mine of infinite
+	knowledge.&lt;/p&gt;
+
+  &lt;p&gt;&lt;cite&gt;Swami Vivekanand&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Spend each day trying to be a little wiser than you were when you woke up. 
+	Day by day, and at the end of the day-if you live long enough-like most people, 
+	you will get out of life what you deserve.”&lt;/p&gt;
+
+  &lt;p&gt;&lt;cite&gt;Charlie Munger&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Along with this, I believe there is an inherent flaw of not realizing this beauty and trying to gain knowledge purely to achieve some materialistic desire, for example. - learning system design for the purpose of passing a job interview, learning ML/AI because of the hype, and reading books because everyone seems to be doing it.
+It is okay for such desires to spark your initial interest, but the fuel for the remaining journey should be pure curiosity. There is a reason why reading fiction (specifically detective novels) or reading about some new controversy theory on the internet is comparatively easier. There is an inherently compelling story in such cases that raises many questions within us - Why the hell did he commit the murder? What is the government hiding? …&lt;/p&gt;
+
+&lt;p&gt;You will observe this to be true for your favourite professors or teachers. All of them began the class with “why” to take this course, and for each new topic or lecture, they started with an enquiry: Why are we studying this new technique? What was the flaw with the last topic we studied? What problem was the original inventor/discoverer trying to solve?…. Some will even let you experience the same journey through assignments or experiments. Some will let you devise your solution first, then point out its flaws - eventually leading you to think, “How the hell can this be even solved?”.&lt;/p&gt;
+
+&lt;p&gt;During self-learning, the responsibility of asking such queries is on the learner itself, and forming this inquisitive mindset is achievable once we are aware of it. This also helps in pruning and traversing the knowledge graph of what to study. For example, there are a plethora of articles/papers and videos on Machine Learning or just &lt;a href=&quot;https://en.wikipedia.org/wiki/Large_language_model&quot;&gt;LLMs&lt;/a&gt;, and going with a mindset to understand it all is the perfect way to provide more business to the companies producing blood-pressure medicines. Instead, a better way would be to enter with queries -&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;What the hell is a LLM?
+    &lt;ul&gt;
+      &lt;li&gt;This may lead you to read some introductory and high level articles by amazing people like &lt;a href=&quot;https://karpathy.ai/&quot;&gt;Andrej Karpathy&lt;/a&gt; or &lt;a href=&quot;https://magazine.sebastianraschka.com/?utm_source=substack&amp;amp;utm_medium=web&amp;amp;utm_campaign=substack_profile&quot;&gt;Sebastian Raschka’s substack&lt;/a&gt;.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;How did they (companies like OpenAI / Anthropic / Google) made it?
+    &lt;ul&gt;
+      &lt;li&gt;Now if you are new to deep learning, this will lead to somewhat deeper dive. But if you have a decent understanding of machine learning and deep learning, you may ask - what changed in the recent times? Was just more data sufficient for this?&lt;/li&gt;
+      &lt;li&gt;This will lead you to realizing that the &lt;a href=&quot;https://arxiv.org/abs/1706.03762&quot;&gt;new architecture of transformers&lt;/a&gt; was particularly important to achieve this. So you read more about this …&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Similarly for books, reading a book because many people read it is not a good approach. Spend some time skimming the intro of the book. Does it raise enough curiosity in you that you want to delve deeper? If not, move on, maybe it is not the right time and circumstances for you to read this now.&lt;/p&gt;
+
+&lt;p&gt;This investigative and divergent approach of learning will require more effort compared to the linear learning that we are used to in schools, but this doesn’t meaning taking structured-courses is wrong, even if you are taking a course - try to formulate a query or a question for every new thing.&lt;/p&gt;
+
+&lt;h2 id=&quot;improving-the-system&quot;&gt;Improving the system&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;You do not rise to the level of your goals. You fall to the level of your systems.&lt;/p&gt;
+
+  &lt;p&gt;&lt;cite&gt;James Clear, author of Atomic Habits&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Even if we have acquired a good mindset to learn something new, there are some ways in which the learning system can be improved for better consistency.&lt;/p&gt;
+
+&lt;h4 id=&quot;iterative-improvement-after-reflection&quot;&gt;Iterative improvement after reflection&lt;/h4&gt;
+&lt;p&gt;Just like any good system, premature optimization is bad for the learning system. This also means that we need to iteratively improve our system after carefully reflecting on what is not working, this is a purely subjective process.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Pain + Reflection = progress&lt;/p&gt;
+
+  &lt;p&gt;&lt;cite&gt;Ray Dalio&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;To create an analogy to the Deep Learning techniques, we need to tune many hyperparameters for the learning process. An example being the learning rate of the gradient descent algorithm. Similarly, while starting a book, it is tempting to read a lot on the first few days, but it might consume a lot of effort, thus leading to lack of motivation in the next days - and the momentum collapses. A better solution would be to start small maybe just two pages a day, let the momentum build up, get used to the system and let consistency produce better results than one-shot efforts.&lt;/p&gt;
+
+&lt;p&gt;Also, there will some days when progress may not be possible, but consistency is not about a lot of progress every-day, but mainly about some progress for the majority of days.&lt;/p&gt;
+&lt;figure&gt;
+	&lt;center&gt;
+		&lt;img src=&quot;/assets/images/consistency.jpeg&quot; width=&quot;35%&quot; height=&quot;auto&quot; style=&quot;border-radius: 10%&quot; /&gt;
+		&lt;figcaption&gt; Taken from twitter &lt;/figcaption&gt;
+	&lt;/center&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&quot;boredom-is-good-for-you&quot;&gt;Boredom is good for you&lt;/h4&gt;
+&lt;p&gt;Learning is not just done while you are focusing on it while sitting at the table. It requires connecting the dots with the existing information while you are lost in some thoughts. There are several articles and reports on why boredom is good for us. I found this &lt;a href=&quot;https://youtu.be/LKPwKFigF8U?si=tGPHcuSrKJVhU0w6&quot;&gt;video by Veritasium&lt;/a&gt; and &lt;a href=&quot;https://fs.blog/learning-baggage/&quot;&gt;this article by Farnam Street&lt;/a&gt; particularly helpful. This also means we need to resist the temptation of checking phones / social media while we are bored.&lt;/p&gt;
+
+&lt;h4 id=&quot;make-sure-to-keep-the-balance&quot;&gt;Make sure to keep the balance&lt;/h4&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Medicine, law, business, engineering, these are noble pursuits and necessary to sustain life. 
+But poetry, beauty, romance, love, these are what we stay alive for.&lt;/p&gt;
+
+  &lt;p&gt;&lt;cite&gt;Robin Williams&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;While being on this journey, you may feel giving up because life is more than just acquiring knowledge 
+and working on some projects. But satisfactions is not found in the extremes, it is better to maintain balance.&lt;/p&gt;
+
+&lt;p&gt;The weights of this balance can be subjective, for some, it may be 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0.4*work + 0.2*family/friends + 0.2*exercise...&lt;/code&gt;.  The weights will also change with time, and not just the weights, the dimensions of this equation itself might change. I doubt that anyone will be able to sustain the extreme case of &lt;a href=&quot;https://en.wikipedia.org/wiki/One-hot&quot;&gt;one-hot vector&lt;/a&gt; - either completely focused on work or something else.&lt;/p&gt;
+
+&lt;p&gt;A good thing about this vector is that the dimensions are not independent, some effort in one of them will also be effective for the others. For example, I love to play football, anytime and anywhere, and have observed that I am able to better work if I have played a game in the recent days (btw it has been more than 3 months since I last played and my work productivity is failing rapidly because of this).&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Life is made of star-stuff. We are the means through which the cosmos aims to understand itself.&lt;/p&gt;
+
+  &lt;p&gt;&lt;cite&gt;Carl Sagan&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>Vaibhav Thakkar</name><email>vaibhav.thakkar.22.12.99@gmail.com</email></author><category term="personal-improvement" /><summary type="html">Context: I recently had a discussion with a friend about the process of self-learning, which is very essential for scientific and engineering disciplines. During which, the point of maintaining consistency or flow state came up. I have struggled with this myself, and have had a disorganized pile of thoughts and conjectures about this for a long time. This post aims to organize them a bit.</summary></entry><entry><title type="html">Vectorized Automatic Differentiation</title><link href="https://vaithak.github.io/vectorized-autodiff-clad/" rel="alternate" type="text/html" title="Vectorized Automatic Differentiation" /><published>2023-08-22T00:00:00+05:30</published><updated>2023-08-22T00:00:00+05:30</updated><id>https://vaithak.github.io/vectorized-autodiff-clad</id><content type="html" xml:base="https://vaithak.github.io/vectorized-autodiff-clad/">&lt;p&gt;In the &lt;a href=&quot;/autodiff-clad&quot;&gt;last post&lt;/a&gt;, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) being the most generic approach; i.e., it works for any function, even those containing control flow statements like for-loops and if-conditions.&lt;/p&gt;
 
 &lt;p&gt;This post will discuss how we can vectorize that approach. Specifically, we will discuss vectorizing forward mode AD (although reverse mode AD can be vectorized in a similar way).&lt;/p&gt;
 

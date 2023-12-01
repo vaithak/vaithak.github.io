@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Some thoughts on self-learning - VT space</title>
+<meta name="description" content="Context: I recently had a discussion with a friend about the process of self-learning, which is very essential for scientific and engineering disciplines. During which, the point of maintaining consistency or flow state came up. I have struggled with this myself, and have had a disorganized pile of thoughts and conjectures about this for a long time. This post aims to organize them a bit.">
+
+
+  <meta name="author" content="Vaibhav Thakkar">
+  
+  <meta property="article:author" content="Vaibhav Thakkar">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VT space">
+<meta property="og:title" content="Some thoughts on self-learning">
+<meta property="og:url" content="https://vaithak.github.io/self-learning/">
+
+
+  <meta property="og:description" content="Context: I recently had a discussion with a friend about the process of self-learning, which is very essential for scientific and engineering disciplines. During which, the point of maintaining consistency or flow state came up. I have struggled with this myself, and have had a disorganized pile of thoughts and conjectures about this for a long time. This post aims to organize them a bit.">
+
+
+
+  <meta property="og:image" content="https://vaithak.github.io/assets/images/progress.png">
+
+
+
+  <meta name="twitter:site" content="@vaithak">
+  <meta name="twitter:title" content="Some thoughts on self-learning">
+  <meta name="twitter:description" content="Context: I recently had a discussion with a friend about the process of self-learning, which is very essential for scientific and engineering disciplines. During which, the point of maintaining consistency or flow state came up. I have struggled with this myself, and have had a disorganized pile of thoughts and conjectures about this for a long time. This post aims to organize them a bit.">
+  <meta name="twitter:url" content="https://vaithak.github.io/self-learning/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://vaithak.github.io/assets/images/progress.png">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2023-12-01T00:00:00+05:30">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://vaithak.github.io/self-learning/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vaibhav Thakkar",
+      "url": "https://vaithak.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VT space Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@2.1.1/build/pseudocode.min.css">
+<script src="https://cdn.jsdelivr.net/npm/pseudocode@2.1.1/build/pseudocode.min.js"></script>
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          VT space
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/tags/">tags</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/year-archive/">posts</a>
+            </li>
+</ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/profile.jpg" alt="Vaibhav Thakkar" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vaibhav Thakkar</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Interested in working on multi-agent intelligent systems and scientific softwares.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">India</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vaithak/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://vaithak.github.io" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/vaithak" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/vaithak" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/review/list/30560993-vaibhav-thakkar" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">goodreads</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:vaibhav.thakkar.22.12.99@gmail.com">
+            <meta itemprop="email" content="vaibhav.thakkar.22.12.99@gmail.com">
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Some thoughts on self-learning">
+    <meta itemprop="description" content="Context: I recently had a discussion with a friend about the process of self-learning, which is very essential for scientific and engineering disciplines. During which, the point of maintaining consistency or flow state came up. I have struggled with this myself, and have had a disorganized pile of thoughts and conjectures about this for a long time. This post aims to organize them a bit.">
+    <meta itemprop="datePublished" content="2023-12-01T00:00:00+05:30">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Some thoughts on self-learning
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#learning-equiv-detective-work">Learning $\equiv$ Detective work</a></li>
+<li>
+<a href="#improving-the-system">Improving the system</a><ul>
+<li><a href="#iterative-improvement-after-reflection">Iterative improvement after reflection</a></li>
+<li><a href="#boredom-is-good-for-you">Boredom is good for you</a></li>
+<li><a href="#make-sure-to-keep-the-balance">Make sure to keep the balance</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p><em>Context:</em> I recently had a discussion with a friend about the process of self-learning, which is very essential for scientific and engineering disciplines. During which, the point of maintaining consistency or flow state came up. I have struggled with this myself, and have had a disorganized pile of thoughts and conjectures about this for a long time. This post aims to organize them a bit.</p>
+
+<p>Note: I am writing this late at night, so expecting many grammatical and structural mistakes, but I don’t care about perfection here.</p>
+
+<h2 id="learning-equiv-detective-work">Learning $\equiv$ Detective work</h2>
+<p>There is an inherent beauty in acquiring knowledge (ज्ञान). Several great human minds have talked about the importance of this,  some notable and my favourite examples being:</p>
+
+<blockquote>
+  <p>The goal of mankind is knowledge . . . What man “learns” is really what he
+	discovers by taking the cover off his own soul, which is a mine of infinite
+	knowledge.</p>
+
+  <p><cite>Swami Vivekanand</cite></p>
+</blockquote>
+
+<blockquote>
+  <p>Spend each day trying to be a little wiser than you were when you woke up. 
+	Day by day, and at the end of the day-if you live long enough-like most people, 
+	you will get out of life what you deserve.”</p>
+
+  <p><cite>Charlie Munger</cite></p>
+</blockquote>
+
+<p>Along with this, I believe there is an inherent flaw of not realizing this beauty and trying to gain knowledge purely to achieve some materialistic desire, for example. - learning system design for the purpose of passing a job interview, learning ML/AI because of the hype, and reading books because everyone seems to be doing it.
+It is okay for such desires to spark your initial interest, but the fuel for the remaining journey should be pure curiosity. There is a reason why reading fiction (specifically detective novels) or reading about some new controversy theory on the internet is comparatively easier. There is an inherently compelling story in such cases that raises many questions within us - Why the hell did he commit the murder? What is the government hiding? …</p>
+
+<p>You will observe this to be true for your favourite professors or teachers. All of them began the class with “why” to take this course, and for each new topic or lecture, they started with an enquiry: Why are we studying this new technique? What was the flaw with the last topic we studied? What problem was the original inventor/discoverer trying to solve?…. Some will even let you experience the same journey through assignments or experiments. Some will let you devise your solution first, then point out its flaws - eventually leading you to think, “How the hell can this be even solved?”.</p>
+
+<p>During self-learning, the responsibility of asking such queries is on the learner itself, and forming this inquisitive mindset is achievable once we are aware of it. This also helps in pruning and traversing the knowledge graph of what to study. For example, there are a plethora of articles/papers and videos on Machine Learning or just <a href="https://en.wikipedia.org/wiki/Large_language_model">LLMs</a>, and going with a mindset to understand it all is the perfect way to provide more business to the companies producing blood-pressure medicines. Instead, a better way would be to enter with queries -</p>
+<ul>
+  <li>What the hell is a LLM?
+    <ul>
+      <li>This may lead you to read some introductory and high level articles by amazing people like <a href="https://karpathy.ai/">Andrej Karpathy</a> or <a href="https://magazine.sebastianraschka.com/?utm_source=substack&utm_medium=web&utm_campaign=substack_profile">Sebastian Raschka’s substack</a>.</li>
+    </ul>
+  </li>
+  <li>How did they (companies like OpenAI / Anthropic / Google) made it?
+    <ul>
+      <li>Now if you are new to deep learning, this will lead to somewhat deeper dive. But if you have a decent understanding of machine learning and deep learning, you may ask - what changed in the recent times? Was just more data sufficient for this?</li>
+      <li>This will lead you to realizing that the <a href="https://arxiv.org/abs/1706.03762">new architecture of transformers</a> was particularly important to achieve this. So you read more about this …</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Similarly for books, reading a book because many people read it is not a good approach. Spend some time skimming the intro of the book. Does it raise enough curiosity in you that you want to delve deeper? If not, move on, maybe it is not the right time and circumstances for you to read this now.</p>
+
+<p>This investigative and divergent approach of learning will require more effort compared to the linear learning that we are used to in schools, but this doesn’t meaning taking structured-courses is wrong, even if you are taking a course - try to formulate a query or a question for every new thing.</p>
+
+<h2 id="improving-the-system">Improving the system</h2>
+<blockquote>
+  <p>You do not rise to the level of your goals. You fall to the level of your systems.</p>
+
+  <p><cite>James Clear, author of Atomic Habits</cite></p>
+</blockquote>
+
+<p>Even if we have acquired a good mindset to learn something new, there are some ways in which the learning system can be improved for better consistency.</p>
+
+<h4 id="iterative-improvement-after-reflection">Iterative improvement after reflection</h4>
+<p>Just like any good system, premature optimization is bad for the learning system. This also means that we need to iteratively improve our system after carefully reflecting on what is not working, this is a purely subjective process.</p>
+
+<blockquote>
+  <p>Pain + Reflection = progress</p>
+
+  <p><cite>Ray Dalio</cite></p>
+</blockquote>
+
+<p>To create an analogy to the Deep Learning techniques, we need to tune many hyperparameters for the learning process. An example being the learning rate of the gradient descent algorithm. Similarly, while starting a book, it is tempting to read a lot on the first few days, but it might consume a lot of effort, thus leading to lack of motivation in the next days - and the momentum collapses. A better solution would be to start small maybe just two pages a day, let the momentum build up, get used to the system and let consistency produce better results than one-shot efforts.</p>
+
+<p>Also, there will some days when progress may not be possible, but consistency is not about a lot of progress every-day, but mainly about some progress for the majority of days.</p>
+<figure>
+	<center>
+		<img src="/assets/images/consistency.jpeg" width="35%" height="auto" style="border-radius: 10%">
+		<figcaption> Taken from twitter </figcaption>
+	</center>
+</figure>
+
+<h4 id="boredom-is-good-for-you">Boredom is good for you</h4>
+<p>Learning is not just done while you are focusing on it while sitting at the table. It requires connecting the dots with the existing information while you are lost in some thoughts. There are several articles and reports on why boredom is good for us. I found this <a href="https://youtu.be/LKPwKFigF8U?si=tGPHcuSrKJVhU0w6">video by Veritasium</a> and <a href="https://fs.blog/learning-baggage/">this article by Farnam Street</a> particularly helpful. This also means we need to resist the temptation of checking phones / social media while we are bored.</p>
+
+<h4 id="make-sure-to-keep-the-balance">Make sure to keep the balance</h4>
+<blockquote>
+  <p>Medicine, law, business, engineering, these are noble pursuits and necessary to sustain life. 
+But poetry, beauty, romance, love, these are what we stay alive for.</p>
+
+  <p><cite>Robin Williams</cite></p>
+</blockquote>
+
+<p>While being on this journey, you may feel giving up because life is more than just acquiring knowledge 
+and working on some projects. But satisfactions is not found in the extremes, it is better to maintain balance.</p>
+
+<p>The weights of this balance can be subjective, for some, it may be 
+<code class="language-plaintext highlighter-rouge">0.4*work + 0.2*family/friends + 0.2*exercise...</code>.  The weights will also change with time, and not just the weights, the dimensions of this equation itself might change. I doubt that anyone will be able to sustain the extreme case of <a href="https://en.wikipedia.org/wiki/One-hot">one-hot vector</a> - either completely focused on work or something else.</p>
+
+<p>A good thing about this vector is that the dimensions are not independent, some effort in one of them will also be effective for the others. For example, I love to play football, anytime and anywhere, and have observed that I am able to better work if I have played a game in the recent days (btw it has been more than 3 months since I last played and my work productivity is failing rapidly because of this).</p>
+
+<hr>
+
+<blockquote>
+  <p>Life is made of star-stuff. We are the means through which the cosmos aims to understand itself.</p>
+
+  <p><cite>Carl Sagan</cite></p>
+</blockquote>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#personal-improvement" class="page__taxonomy-item" rel="tag">personal-improvement</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-12-01T00:00:00+05:30">December 1, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?via=vaithak&text=Some+thoughts+on+self-learning%20https%3A%2F%2Fvaithak.github.io%2Fself-learning%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fvaithak.github.io%2Fself-learning%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fvaithak.github.io%2Fself-learning%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/vectorized-autodiff-clad/" class="pagination--pager" title="Vectorized Automatic Differentiation
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/partial-derivative.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/vectorized-autodiff-clad/" rel="permalink">Vectorized Automatic Differentiation
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In the last post, we discussed techniques for computing derivatives (or gradients) of arbitrary computational functions, with automatic differentiation (AD) ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/llvm.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/autodiff-clad/" rel="permalink">Automatic Differentiation
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Given a continuos function $f(x)$, how do you compute it’s derivative $f’(x_0)$  for a particular input $x_0$ computationally?
+Similarly, for a vector valued...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/gsoc.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/gsoc-project-overview-part1/" rel="permalink">Counting Linear Extensions: GSoC Project Overview
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          14 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">I have been selected as a student developer in Google Summer of Code under the GeomScale organization &amp; will be spending the upcoming 10 Weeks working on...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/vaithak" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/vaithak" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://www.goodreads.com/review/list/30560993-vaibhav-thakkar" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i> goodreads</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2023 Vaibhav Thakkar. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://vaithak.github.io/self-learning/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/self-learning"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-vaithak-github-io-my-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

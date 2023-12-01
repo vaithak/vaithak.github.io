@@ -16,4 +16,10 @@ var store = [{
         "tags": ["autodiff"],
         "url": "/vectorized-autodiff-clad/",
         "teaser": "/assets/images/partial-derivative.png"
+      },{
+        "title": "Some thoughts on self-learning",
+        "excerpt":"Context: I recently had a discussion with a friend about the process of self-learning, which is very essential for scientific and engineering disciplines. During which, the point of maintaining consistency or flow state came up. I have struggled with this myself, and have had a disorganized pile of thoughts and...","categories": [],
+        "tags": ["personal-improvement"],
+        "url": "/self-learning/",
+        "teaser": "/assets/images/progress.png"
       }]
